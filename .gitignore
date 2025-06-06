@@ -1,0 +1,41 @@
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# PHP
+vendor/
+composer.lock
+*.log
+*.tmp
+
+# Configurações sensíveis
+config/database.php
+.env
+.env.local
+
+# Cache e temporários
+cache/
+tmp/
+temp/
+logs/
+
+# Uploads e arquivos gerados
+uploads/
+storage/
+
+# Dependências
+node_modules/
+package-lock.json
+
+# Arquivos de backup
+*.bak
+*.backup
+*.old 
