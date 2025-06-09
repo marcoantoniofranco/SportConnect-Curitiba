@@ -1,9 +1,3 @@
-<?php if (!defined('FONT_AWESOME_LOADED')): ?>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <?php define('FONT_AWESOME_LOADED', true); ?>
-<?php endif; ?>
-
-
 <footer class="site-footer">
     <div class="footer-content">
         <div class="footer-section">
