@@ -20,7 +20,7 @@
         }
         ?>
 
-        <form action="/recover-password" method="POST">
+        <form action="/SportConnect-Curitiba/sportconnect/auth/recover" method="POST">
             <p>Informe seu CPF e Data de Nascimento para recuperar sua senha.</p>
             <div>
                 <label for="cpf">CPF:</label>

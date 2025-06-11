@@ -20,7 +20,7 @@
         }
         ?>
 
-        <form action="/register" method="POST">
+        <form action="/SportConnect-Curitiba/sportconnect/auth/register" method="POST">
             <div>
                 <label for="name">Nome:</label>
                 <input type="text" id="name" name="name" required>
