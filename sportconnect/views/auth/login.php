@@ -20,7 +20,7 @@
         }
         ?>
 
-        <form action="/SportConnect-Curitiba/sportconnect/auth/login" method="POST"> <div class="form-group">
+        <form action="/login" method="POST"> <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
@@ -34,8 +34,8 @@
         </form>
 
         <div class="links">
-            <a href=/SportConnect-Curitiba/sportconnect/auth/register">Cadastrar-se</a> |
-            <a href="/SportConnect-Curitiba/sportconnect/auth/recover">Esqueci minha senha</a>
+            <a href=/register">Cadastrar-se</a> |
+            <a href="/recover-password">Esqueci minha senha</a>
         </div>
     </div>
     
