@@ -1,7 +1,9 @@
 <?php
+
 require_once __DIR__ . '/../includes/session.php';
 
 class AuthController {
+
     public function loginForm() {
         if (empty($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -12,7 +14,7 @@ class AuthController {
     public function login() {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
-            header('Location: /login');
+            header('Location: index.php?url=auth/loginForm');
             exit();
         }
         unset($_SESSION['csrf_token']);
@@ -22,7 +24,7 @@ class AuthController {
 
         if (empty($email) || empty($password)) {
             $_SESSION['error_message'] = 'Por favor, preencha todos os campos.';
-            header('Location: /login');
+            header('Location: index.php?url=auth/loginForm');
             exit();
         }
 
@@ -30,18 +32,18 @@ class AuthController {
             $hashed_password_for_test = password_hash('123456', PASSWORD_DEFAULT);
             
             if (password_verify($password, $hashed_password_for_test)) {
-                setUserSession(1); 
-                $_SESSION['user_name'] = 'Usuário Teste'; 
+                setUserSession(1);
+                $_SESSION['user_name'] = 'Usuário Teste';
                 
-                header('Location: /dashboard'); 
+                header('Location: index.php?url=home/index');
                 exit();
             }
         }
+
         $_SESSION['error_message'] = 'Email ou senha inválidos.';
-        header('Location: /login');
+        header('Location: index.php?url=auth/loginForm');
         exit();
     }
-
 
     public function registerForm() {
         if (empty($_SESSION['csrf_token'])) {
@@ -53,7 +55,7 @@ class AuthController {
     public function register() {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
-            header('Location: /register');
+            header('Location: index.php?url=auth/registerForm');
             exit();
         }
         unset($_SESSION['csrf_token']);
@@ -65,17 +67,18 @@ class AuthController {
         
         if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
             $_SESSION['error_message'] = 'Todos os campos são obrigatórios.';
-            header('Location: /register');
+            header('Location: index.php?url=auth/registerForm');
             exit();
         }
 
         if ($password !== $confirm_password) {
             $_SESSION['error_message'] = 'As senhas não coincidem.';
-            header('Location: /register');
+            header('Location: index.php?url=auth/registerForm');
             exit();
         }
+
         $_SESSION['success_message'] = 'Cadastro realizado com sucesso! Faça o login.';
-        header('Location: /login');
+        header('Location: index.php?url=auth/loginForm');
         exit();
     }
 
@@ -89,19 +92,19 @@ class AuthController {
     public function recoverPassword() {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
-            header('Location: /recover-password');
+            header('Location: index.php?url=auth/recoverPasswordForm');
             exit();
         }
         unset($_SESSION['csrf_token']);
 
         $_SESSION['success_message'] = 'Se os dados estiverem corretos, um email de recuperação será enviado.';
-        header('Location: /recover-password');
+        header('Location: index.php?url=auth/recoverPasswordForm');
         exit();
     }
-    
+
     public function logout() {
         logout();
-        header('Location: /login');
+        header('Location: index.php?url=auth/loginForm');
         exit();
     }
 }
