@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../includes/session.php';
+// require_once __DIR__ . '/../models/User.php';
 
 class AuthController {
 
@@ -28,6 +29,18 @@ class AuthController {
             exit();
         }
 
+        /* CÓDIGO FINAL
+         $userModel = new User();
+         $user = $userModel->findByEmail($email);
+         if ($user && password_verify($password, $user->senha)) {
+             setUserSession($user->id_usuario);
+             $_SESSION['user_name'] = $user->nome;
+             header('Location: index.php?url=home/index');
+             exit();
+         } FIM DO CÓDIGO FINAL */
+
+
+        // CÓDIGO TESTE (apagar oque estiver dentro quando acabar as classes)
         if ($email === 'teste@exemplo.com') {
             $hashed_password_for_test = password_hash('123456', PASSWORD_DEFAULT);
             
@@ -38,7 +51,7 @@ class AuthController {
                 header('Location: index.php?url=home/index');
                 exit();
             }
-        }
+        } //FIM DO CÓDIGO TESTE
 
         $_SESSION['error_message'] = 'Email ou senha inválidos.';
         header('Location: index.php?url=auth/loginForm');
@@ -77,10 +90,33 @@ class AuthController {
             exit();
         }
 
+        /* CÓDIGO FINAL (descomentar quando O marquinhus acabar as classes)
+         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+         $dadosNovoUsuario = [
+             'nome' => $name,
+             'email' => $email,
+             'senha' => $hashedPassword,
+             'telefone' => $_POST['phone'] ?? '',
+             'cpf' => $_POST['cpf'] ?? '',
+             'data_nascimento' => $_POST['birth_date'] ?? ''
+         ];
+         $userModel = new User();
+         if ($userModel->create($dadosNovoUsuario)) {
+             $_SESSION['success_message'] = 'Cadastro realizado com sucesso! Faça o login.';
+             header('Location: index.php?url=auth/loginForm');
+             exit();
+         } else {
+             $_SESSION['error_message'] = 'Ocorreu um erro ao criar sua conta.';
+             header('Location: index.php?url=auth/registerForm');
+             exit();
+         } FIM DO CÓDIGO FINAL*/ 
+
+        //CÓDIGO TESTE (apagar)
         $_SESSION['success_message'] = 'Cadastro realizado com sucesso! Faça o login.';
         header('Location: index.php?url=auth/loginForm');
         exit();
-    }
+        // FIM DO CÓDIGO TESTE
+    } 
 
     public function recoverPasswordForm() {
         if (empty($_SESSION['csrf_token'])) {
@@ -97,9 +133,22 @@ class AuthController {
         }
         unset($_SESSION['csrf_token']);
 
+        /* CÓDIGO FINAL (descomentar depois)
+         $cpf = $_POST['cpf'] ?? '';
+         $data_nascimento = $_POST['birth_date'] ?? '';
+         $userModel = new User();
+         $user = $userModel->findByCpfAndBirthdate($cpf, $data_nascimento);
+         if ($user) {
+              // Lógica de sucesso na recuperação
+         } else {
+              // Lógica de falha
+         } FIM DO CÓDIGO FINAL */
+
+
+        //CÓDIGO TESTE (apagar)
         $_SESSION['success_message'] = 'Se os dados estiverem corretos, um email de recuperação será enviado.';
         header('Location: index.php?url=auth/recoverPasswordForm');
-        exit();
+        exit(); //FIM DO CÓDIGO TESTE
     }
 
     public function logout() {
