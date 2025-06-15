@@ -6,6 +6,7 @@ CREATE TABLE usuarios (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     telefone VARCHAR(20) NOT NULL,
+    whatsapp VARCHAR(20),
     cpf VARCHAR(14) NOT NULL UNIQUE,
     data_nascimento DATE NOT NULL,
     senha VARCHAR(255) NOT NULL
@@ -43,5 +44,3 @@ CREATE TABLE participacoes (
     UNIQUE KEY unique_participacao (id_publicacao, id_usuario)
 );
 
-INSERT INTO categorias_esportivas (nome, descricao) VALUES
-('Futebol', 'O esporte mais popular do Brasil');
