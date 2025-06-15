@@ -1,6 +1,6 @@
 <?php
 class ProfileController {
-    public function verPerfil() {
+    public function index () {
         session_start();
         
         // Verificar se usuário está logado
