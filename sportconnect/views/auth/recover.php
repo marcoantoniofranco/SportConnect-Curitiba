@@ -6,6 +6,7 @@
     <title>Recuperar Senha - SportConnect Curitiba</title>
 </head>
 <body>
+    <?php include_once __DIR__ . "/../partials/header.php"; ?>
     <div>
         <h2>Recuperar Senha</h2>
 
@@ -39,5 +40,6 @@
             <a href="/login">Voltar para o Login</a>
         </div>
     </div>
+    <?php include_once __DIR__ . "/../partials/footer.php"; ?>
 </body>
 </html>

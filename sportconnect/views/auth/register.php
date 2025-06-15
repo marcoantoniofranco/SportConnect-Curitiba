@@ -6,6 +6,7 @@
     <title>Cadastro - SportConnect Curitiba</title>
 </head>
 <body>
+    <?php include_once __DIR__ . "/../partials/header.php"; ?>
     <div>
         <h2>Cadastro</h2>
 
@@ -58,5 +59,6 @@
             <a href="/login">Já tenho uma conta</a>
         </div>
     </div>
+    <?php include_once __DIR__ . "/../partials/footer.php"; ?>
 </body>
 </html>

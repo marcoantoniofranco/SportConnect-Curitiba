@@ -6,6 +6,7 @@
     <title>Login - SportConnect Curitiba</title>
 </head>
 <body>
+    <?php include_once __DIR__ . "/../partials/header.php"; ?>
     <div class="login-container">
         <h2>Login</h2>
 
@@ -38,6 +39,6 @@
             <a href="/SportConnect-Curitiba/sportconnect/auth/recover">Esqueci minha senha</a>
         </div>
     </div>
-    
+    <?php include_once __DIR__ . "/../partials/footer.php"; ?>
 </body>
 </html>
