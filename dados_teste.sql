@@ -9,12 +9,12 @@ INSERT INTO categorias_esportivas (nome, descricao) VALUES
 ('Natação', 'Esporte aquático completo'),
 ('Ciclismo', 'Pedalada em grupo ou individual');
 
-INSERT INTO usuarios (nome, email, telefone, whatsapp, cpf, data_nascimento, senha) VALUES
-('João Silva', 'joao.silva@email.com', '(41) 99999-8888', '(41) 99999-8888', '123.456.789-01', '1995-03-15', '123456'),
-('Maria Santos', 'maria.santos@email.com', '(41) 98888-7777', '(41) 98888-7777', '987.654.321-09', '1992-07-22', '123456'),
-('Pedro Oliveira', 'pedro.oliveira@email.com', '(41) 97777-6666', NULL, '456.789.123-45', '1998-11-10', '123456'),
-('Ana Costa', 'ana.costa@email.com', '(41) 96666-5555', '(41) 96666-5555', '789.123.456-78', '1990-05-30', '123456'),
-('Usuário Teste', 'teste@exemplo.com', '(41) 99999-0000', '(41) 99999-0000', '000.000.000-01', '1990-01-01', '123456');
+INSERT INTO usuarios (nome, email, telefone, cpf, data_nascimento, senha) VALUES
+('João Silva', 'joao.silva@email.com', '(41) 99999-8888', '(41) 99999-8888', '123.456.789-01', '1995-03-15', '$2y$10$pO6sAhkoUhcBTsbtHKmheOxqPe7M246UtDD0Wi0ujI2ChvKOefBTq'),
+('Maria Santos', 'maria.santos@email.com', '(41) 98888-7777', '(41) 98888-7777', '987.654.321-09', '1992-07-22', '$2y$10$pO6sAhkoUhcBTsbtHKmheOxqPe7M246UtDD0Wi0ujI2ChvKOefBTq'),
+('Pedro Oliveira', 'pedro.oliveira@email.com', '(41) 97777-6666', NULL, '456.789.123-45', '1998-11-10', '$2y$10$pO6sAhkoUhcBTsbtHKmheOxqPe7M246UtDD0Wi0ujI2ChvKOefBTq'),
+('Ana Costa', 'ana.costa@email.com', '(41) 96666-5555', '(41) 96666-5555', '789.123.456-78', '1990-05-30', '$2y$10$pO6sAhkoUhcBTsbtHKmheOxqPe7M246UtDD0Wi0ujI2ChvKOefBTq'),
+('Usuário Teste', 'teste@exemplo.com', '(41) 99999-0000', '(41) 99999-0000', '000.000.000-01', '1990-01-01', '$2y$10$pO6sAhkoUhcBTsbtHKmheOxqPe7M246UtDD0Wi0ujI2ChvKOefBTq');
 
 INSERT INTO publicacoes (id_usuario, id_categoria, titulo, descricao, local, data_evento, vagas) VALUES
 (1, 1, 'Pelada no Parque Barigui', 'Futebol descontraído aos domingos pela manhã. Venha participar!', 'Parque Barigui - Campo 1', '2024-01-21 09:00:00', 20),
