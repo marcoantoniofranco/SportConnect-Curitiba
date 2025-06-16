@@ -11,17 +11,18 @@
         <h2>Login</h2>
 
         <?php
-         if (isset($_SESSION['error_message'])) {
+        if (isset($_SESSION['error_message'])) {
             echo '<p>' . htmlspecialchars($_SESSION['error_message']) . '</p>';
-            unset($_SESSION['error_message']); // Limpa a mensagem após exibir
+            unset($_SESSION['error_message']);
         }
         if (isset($_SESSION['success_message'])) {
             echo '<p>' . htmlspecialchars($_SESSION['success_message']) . '</p>';
-            unset($_SESSION['success_message']); // Limpa a mensagem após exibir
+            unset($_SESSION['success_message']);
         }
         ?>
 
-        <form action="index.php?url=auth/login" method="POST"> <div class="form-group">
+        <form action="index.php?url=auth/login" method="POST">
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>

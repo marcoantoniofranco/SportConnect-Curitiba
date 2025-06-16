@@ -1,27 +1,57 @@
 <?php
+
+require_once __DIR__ . '/../models/User.php';
+
 class ProfileController {
     public function index () {
         session_start();
         
-        // Verificar se usuário está logado
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: index.php?url=auth/loginForm');
+            exit();
+        }
+
+        $user = new User();
+        if ($user->findById($_SESSION['user_id'])) {
+            $userData = new stdClass();
+                         $userData->nome = $user->getNome();
+             $userData->email = $user->getEmail();
+             $userData->telefone = $user->getTelefone();
+            $userData->bio = ""; 
+            $userData->profile_photo = null;
+            $userData->esportes = "";
+            $userData->nivel = "";
+            $userData->localizacao = "";
+            $userData->disponibilidade = "";
+            $userData->idade = "";
+        } else {
+            $userData = new stdClass();
+            $userData->nome = "João Silva";
+            $userData->email = "joao.silva@email.com";
+            $userData->telefone = "(41) 99999-8888";
+            $userData->bio = "Apaixonado por esportes desde criança. Pratico futebol há mais de 10 anos e sempre busco novos desafios. Gosto de participar de campeonatos amadores e fazer novas amizades através do esporte.";
+            $userData->profile_photo = null;
+            $userData->esportes = "Futebol,Vôlei,Corrida,Basquete";
+            $userData->nivel = "Intermediário";
+            $userData->localizacao = "Curitiba, PR";
+            $userData->disponibilidade = "Noites e fins de semana";
+            $userData->idade = "28";
+        }
         
-
-        // Buscar dados do usuário no banco, código comentado para teste!
-        require_once __DIR__ . "/../models/User.php";
-        $user_id = $_SESSION['user_id'];
-        $user = User::buscarPorId($user_id);
-
+        $user = $userData;
         require __DIR__ . "/../views/profile/index.php";
     }
-
 
     public function edit(){
         session_start();
         
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: index.php?url=auth/loginForm');
+            exit();
+        }
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             require_once "../includes/csrf.php";
-            require_once "../models/User.php";
 
             if (!validarTokenCSRF($_POST['csrf_token'])){
                 die("Erro: CSRF Token inválido!");
@@ -34,8 +64,6 @@ class ProfileController {
             if(empty($nome) || empty($esporte)){
                 die('Todos os campos são obrigatórios!');
             }
-
-            User::atualizar($userId, $nome, $esporte);
 
             header('Location: /SportConnect-Curitiba/sportconnect/profile');
             exit();

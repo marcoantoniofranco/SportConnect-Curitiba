@@ -1,12 +1,15 @@
 <?php
 
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/Post.php';
+
 class ParticipationController {
     private $db;
     private $user;
 
     public function __construct() {
         $this->db = new Database();
-        // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
             exit();
@@ -16,45 +19,44 @@ class ParticipationController {
     }
 
     public function apply($post_id) {
-        // Validate CSRF token
         if (!validateCSRFToken($_POST['csrf_token'])) {
             $_SESSION['error'] = 'Invalid form submission';
             header('Location: /posts/view/' . $post_id);
             exit();
         }
 
-        // Check if post exists
         $post = new Post();
-        $post->findById($post_id);
-        
-        if (!$post->getId()) {
+        if (!$post->findById($post_id)) {
             $_SESSION['error'] = 'Post not found';
             header('Location: /posts');
             exit();
         }
 
-        // Check if user is not the post owner
         if ($post->getUserId() === $_SESSION['user_id']) {
             $_SESSION['error'] = 'You cannot apply to your own post';
             header('Location: /posts/view/' . $post_id);
             exit();
         }
 
-        // Check if user already applied
-        $participation = new Participation();
-        if ($participation->findByUserAndPost($_SESSION['user_id'], $post_id)) {
+        $conexao = $this->db->getConexao();
+        $sql = "SELECT id FROM participacoes WHERE id_usuario = :user_id AND id_publicacao = :post_id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':user_id', $_SESSION['user_id']);
+        $stmt->bindParam(':post_id', $post_id);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
             $_SESSION['error'] = 'You have already applied to this post';
             header('Location: /posts/view/' . $post_id);
             exit();
         }
 
-        // Create new participation
-        $participation = new Participation();
-        $participation->setPostId($post_id);
-        $participation->setUserId($_SESSION['user_id']);
-        $participation->setStatus('pending');
+        $sql = "INSERT INTO participacoes (id_publicacao, id_usuario, status) VALUES (:post_id, :user_id, 'pendente')";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':post_id', $post_id);
+        $stmt->bindParam(':user_id', $_SESSION['user_id']);
 
-        if ($participation->save()) {
+        if ($stmt->execute()) {
             $_SESSION['success'] = 'Application submitted successfully';
         } else {
             $_SESSION['error'] = 'Error submitting application';
@@ -65,45 +67,50 @@ class ParticipationController {
     }
 
     public function respond($participation_id, $status) {
-        // Validate CSRF token
         if (!validateCSRFToken($_POST['csrf_token'])) {
             $_SESSION['error'] = 'Invalid form submission';
             header('Location: /posts');
             exit();
         }
 
-        // Validate status
-        if (!in_array($status, ['accepted', 'rejected'])) {
+        if (!in_array($status, ['aceito', 'recusado'])) {
             $_SESSION['error'] = 'Invalid status';
             header('Location: /posts');
             exit();
         }
 
-        // Get participation
-        $participation = new Participation();
-        $participation->findById($participation_id);
+        $conexao = $this->db->getConexao();
+        $sql = "SELECT * FROM participacoes WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':id', $participation_id);
+        $stmt->execute();
+        $participation = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$participation->getId()) {
+        if (!$participation) {
             $_SESSION['error'] = 'Participation not found';
             header('Location: /posts');
             exit();
         }
 
-        // Get post
         $post = new Post();
-        $post->findById($participation->getPostId());
+        if (!$post->findById($participation['id_publicacao'])) {
+            $_SESSION['error'] = 'Post not found';
+            header('Location: /posts');
+            exit();
+        }
 
-        // Check if user is post owner
         if ($post->getUserId() !== $_SESSION['user_id']) {
             $_SESSION['error'] = 'Unauthorized';
             header('Location: /posts');
             exit();
         }
 
-        // Update participation status
-        $participation->setStatus($status);
+        $sql = "UPDATE participacoes SET status = :status WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $participation_id);
         
-        if ($participation->update()) {
+        if ($stmt->execute()) {
             $_SESSION['success'] = 'Participation ' . $status . ' successfully';
         } else {
             $_SESSION['error'] = 'Error updating participation';

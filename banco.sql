@@ -43,5 +43,3 @@ CREATE TABLE participacoes (
     UNIQUE KEY unique_participacao (id_publicacao, id_usuario)
 );
 
-INSERT INTO categorias_esportivas (nome, descricao) VALUES
-('Futebol', 'O esporte mais popular do Brasil');
