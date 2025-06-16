@@ -13,16 +13,34 @@ require_once __DIR__ . '/../../includes/csrf.php';
         <p class="lead text-muted">Organize um evento esportivo e encontre parceiros para jogar</p>
       </div>
 
+      <?php if (isset($_SESSION['error'])): ?>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <?php echo htmlspecialchars($_SESSION['error']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      <?php unset($_SESSION['error']); ?>
+      <?php endif; ?>
+
+      <?php if (isset($_SESSION['success'])): ?>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>
+        <?php echo htmlspecialchars($_SESSION['success']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      <?php unset($_SESSION['success']); ?>
+      <?php endif; ?>
+
       <div class="card">
         <div class="card-body p-4">
-          <form action="/posts/create" method="POST">
-            <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
-            
+          <form action="index.php?url=post/create" method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
+
             <div class="mb-4">
               <label for="title" class="form-label fw-semibold">
                 <i class="bi bi-card-text me-2"></i>Título do Evento
               </label>
-              <input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Ex: Futebol no Parque Barigui - Domingo 15h" required>
+              <input type="text" class="form-control form-control-lg" id="title" name="title" value="<?php echo htmlspecialchars($form_data['title'] ?? ''); ?>" placeholder="Ex: Futebol no Parque Barigui - Domingo 15h" required>
               <div class="form-text">Seja específico sobre o esporte, local e horário</div>
             </div>
 
@@ -32,12 +50,17 @@ require_once __DIR__ . '/../../includes/csrf.php';
               </label>
               <select class="form-select form-select-lg" id="category_id" name="category_id" required>
                 <option value="">Selecione uma categoria</option>
-                <option value="1">⚽ Futebol</option>
-                <option value="2">🏀 Basquete</option>
-                <option value="3">🏐 Vôlei</option>
-                <option value="4">🏃 Corrida</option>
-                <option value="5">🎾 Tênis</option>
-                <option value="6">🏊 Natação</option>
+                <?php if (isset($categories) && !empty($categories)): ?>
+                <?php foreach ($categories as $category): ?>
+                <option value="<?php echo $category['id_categoria']; ?>" <?php echo (isset($form_data['category_id']) && $form_data['category_id'] == $category['id_categoria']) ? 'selected' : ''; ?>>
+                  <?php echo htmlspecialchars($category['nome']); ?>
+                </option>
+                <?php endforeach; ?>
+                <?php else: ?>
+                <option value="1" <?php echo (isset($form_data['category_id']) && $form_data['category_id'] == '1') ? 'selected' : ''; ?>>
+                  Esporte Geral
+                </option>
+                <?php endif; ?>
               </select>
             </div>
 
@@ -45,7 +68,7 @@ require_once __DIR__ . '/../../includes/csrf.php';
               <label for="description" class="form-label fw-semibold">
                 <i class="bi bi-chat-quote me-2"></i>Descrição do Evento
               </label>
-              <textarea class="form-control" id="description" name="description" rows="4" placeholder="Descreva o evento: nível dos jogadores, equipamentos necessários, regras especiais..." required></textarea>
+              <textarea class="form-control" id="description" name="description" rows="4" placeholder="Descreva o evento: nível dos jogadores, equipamentos necessários, regras especiais..." required><?php echo htmlspecialchars($form_data['description'] ?? ''); ?></textarea>
               <div class="form-text">Seja claro sobre o que espera dos participantes</div>
             </div>
 
@@ -53,7 +76,7 @@ require_once __DIR__ . '/../../includes/csrf.php';
               <label for="location" class="form-label fw-semibold">
                 <i class="bi bi-geo-alt me-2"></i>Local do Evento
               </label>
-              <input type="text" class="form-control" id="location" name="location" placeholder="Ex: Arena da UFPR, Quadra do Parque Barigui, Pista do Parque Tanguá" required>
+              <input type="text" class="form-control" id="location" name="location" value="<?php echo htmlspecialchars($form_data['location'] ?? ''); ?>" placeholder="Ex: Arena da UFPR, Quadra do Parque Barigui, Pista do Parque Tanguá" required>
               <div class="form-text">Inclua endereço completo ou ponto de referência conhecido</div>
             </div>
 
@@ -62,13 +85,13 @@ require_once __DIR__ . '/../../includes/csrf.php';
                 <label for="event_date" class="form-label fw-semibold">
                   <i class="bi bi-calendar-event me-2"></i>Data do Evento
                 </label>
-                <input type="date" class="form-control" id="event_date" name="event_date" min="<?php echo date('Y-m-d'); ?>" required>
+                <input type="date" class="form-control" id="event_date" name="event_date" value="<?php echo htmlspecialchars($form_data['event_date'] ?? ''); ?>" min="<?php echo date('Y-m-d'); ?>" required>
               </div>
               <div class="col-md-6">
                 <label for="event_time" class="form-label fw-semibold">
                   <i class="bi bi-clock me-2"></i>Horário
                 </label>
-                <input type="time" class="form-control" id="event_time" name="event_time" required>
+                <input type="time" class="form-control" id="event_time" name="event_time" value="<?php echo htmlspecialchars($form_data['event_time'] ?? ''); ?>" required>
               </div>
             </div>
 
@@ -76,7 +99,7 @@ require_once __DIR__ . '/../../includes/csrf.php';
               <label for="slots" class="form-label fw-semibold">
                 <i class="bi bi-people me-2"></i>Número de Vagas
               </label>
-              <input type="number" class="form-control" id="slots" name="slots" min="1" max="50" placeholder="Quantas pessoas você precisa?" required>
+              <input type="number" class="form-control" id="slots" name="slots" value="<?php echo htmlspecialchars($form_data['slots'] ?? ''); ?>" min="1" max="50" placeholder="Quantas pessoas você precisa?" required>
               <div class="form-text">Número de participantes que você está procurando</div>
             </div>
 

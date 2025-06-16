@@ -38,9 +38,8 @@ class AuthController {
 
             if ($remember_me) {
                 $token = bin2hex(random_bytes(32));
-                setcookie('remember_token', $token, time() + (86400 * 30), '/', '', true, true); // 30 dias, seguro e httpOnly
+                setcookie('remember_token', $token, time() + (86400 * 30), '/', '', true, true);
                 
-                // Salvar o token no banco
                 $userModel->saveRememberToken($user['id_usuario'], $token);
             }
 
@@ -65,7 +64,6 @@ class AuthController {
                 return true;
             }
             
-            // Se o token for inválido, remove o cookie
             setcookie('remember_token', '', time() - 3600, '/');
         }
         return false;

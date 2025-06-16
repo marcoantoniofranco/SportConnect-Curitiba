@@ -1,5 +1,3 @@
-
-
 :root {
     --primary-color: #2563eb;
     --secondary-color: #64748b;
@@ -95,8 +93,6 @@ body {
     border: none;
 }
 
-
-
 .hero-section {
     background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
     color: white;
@@ -157,107 +153,31 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.profile-avatar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.profile-avatar.bg-primary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-}
-
-.profile-edit .text-center {
-    text-align: center !important;
-}
-
-.profile-edit .profile-avatar {
-    margin: 0 auto 1rem auto;
-}
-
-.profile-avatar,
-.profile-avatar-container .profile-avatar,
-#profile-preview .profile-avatar {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
-.profile-photo-upload {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.profile-photo-upload .position-relative {
-    display: inline-block;
-}
-
-.text-center .profile-avatar {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-.text-center .position-relative {
-    display: inline-block;
-}
-
-.profile-avatar + .btn.position-absolute,
-.position-relative .btn.position-absolute {
-    transform: translate(25%, 25%);
-}
-
-.stats-card {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    text-align: center;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.stats-number {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.stats-label {
-    color: var(--secondary-color);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
 .auth-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
 }
 
 .auth-card {
     background: white;
     border-radius: 1rem;
+    padding: 2rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    width: 100%;
+    max-width: 400px;
 }
 
 .auth-header {
-    background: var(--primary-color);
-    color: white;
-    padding: 2rem;
     text-align: center;
+    margin-bottom: 2rem;
+    color: var(--dark-color);
 }
 
 .auth-body {
-    padding: 2rem;
+    margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -266,7 +186,7 @@ body {
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .main-content {

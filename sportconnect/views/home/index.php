@@ -3,7 +3,6 @@ $pageTitle = 'SportConnect Curitiba - Conectando Atletas';
 include __DIR__ . '/../partials/header.php'; 
 ?>
 
-<!-- Hero Section -->
 <div class="hero-section">
   <div class="container">
     <div class="row align-items-center">
@@ -38,7 +37,6 @@ include __DIR__ . '/../partials/header.php';
   </div>
 </div>
 
-<!-- Esportes Populares -->
 <section class="py-5">
   <div class="container">
     <div class="text-center mb-5">
@@ -98,7 +96,6 @@ include __DIR__ . '/../partials/header.php';
   </div>
 </section>
 
-<!-- Como Funciona -->
 <section id="como-funciona" class="py-5 bg-light">
   <div class="container">
     <div class="text-center mb-5">
@@ -146,7 +143,6 @@ include __DIR__ . '/../partials/header.php';
   </div>
 </section>
 
-<!-- Exemplo Prático -->
 <section class="py-5">
   <div class="container">
     <div class="row align-items-center">
@@ -197,7 +193,6 @@ include __DIR__ . '/../partials/header.php';
   </div>
 </section>
 
-<!-- Call to Action -->
 <?php if (!isset($_SESSION['user_id'])): ?>
 <section class="py-5 bg-primary text-white">
   <div class="container text-center">
