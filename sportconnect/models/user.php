@@ -154,7 +154,7 @@ class User
     {
         try {
             $conexao = $this->db->getConexao();
-            $expires_at = date('Y-m-d H:i:s', time() + (86400 * 30)); // 30 dias
+            $expires_at = date('Y-m-d H:i:s', time() + (86400 * 30));
             
             $sql = "INSERT INTO remember_tokens (user_id, token, expires_at) VALUES (:user_id, :token, :expires_at)";
             $stmt = $conexao->prepare($sql);

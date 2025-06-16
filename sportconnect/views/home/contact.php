@@ -12,108 +12,65 @@ include __DIR__ . '/../partials/header.php';
         <p class="lead text-muted">Estamos aqui para ajudar você a se conectar com outros atletas</p>
       </div>
 
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <div class="card h-100">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 mb-4">
+          <div class="card">
             <div class="card-body p-4">
-              <h3 class="card-title text-primary mb-4">
+              <h3 class="card-title text-primary mb-4 text-center">
                 <i class="bi bi-info-circle me-2"></i>Informações de Contato
               </h3>
 
-              <div class="mb-3">
-                <h5 class="mb-2">
-                  <i class="bi bi-geo-alt text-primary me-2"></i>Localização
-                </h5>
-                <p class="text-muted mb-0">Curitiba, Paraná - Brasil</p>
-                <small class="text-muted">Atendemos toda região metropolitana</small>
-              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <h5 class="mb-2">
+                    <i class="bi bi-geo-alt text-primary me-2"></i>Localização
+                  </h5>
+                  <p class="text-muted mb-0">Curitiba, Paraná - Brasil</p>
+                  <small class="text-muted">Atendemos toda região metropolitana</small>
+                </div>
 
-              <div class="mb-3">
-                <h5 class="mb-2">
-                  <i class="bi bi-envelope text-primary me-2"></i>E-mail
-                </h5>
-                <p class="text-muted mb-0">contato@sportconnect.com.br</p>
-                <small class="text-muted">Respondemos em até 24 horas</small>
-              </div>
+                <div class="col-md-6 mb-3">
+                  <h5 class="mb-2">
+                    <i class="bi bi-envelope text-primary me-2"></i>E-mail
+                  </h5>
+                  <p class="text-muted mb-0">contato@sportconnect.com.br</p>
+                  <small class="text-muted">Respondemos em até 24 horas</small>
+                </div>
 
-              <div class="mb-3">
-                <h5 class="mb-2">
-                  <i class="bi bi-phone text-primary me-2"></i>Telefone/WhatsApp
-                </h5>
-                <p class="text-muted mb-0">(41) 99999-9999</p>
-                <small class="text-muted">Segunda a sexta, 8h às 18h</small>
-              </div>
+                <div class="col-md-6 mb-3">
+                  <h5 class="mb-2">
+                    <i class="bi bi-phone text-primary me-2"></i>Telefone/WhatsApp
+                  </h5>
+                  <p class="text-muted mb-0">(41) 99999-9999</p>
+                  <small class="text-muted">Segunda a sexta, 8h às 18h</small>
+                </div>
 
-              <div class="mb-3">
-                <h5 class="mb-2">
-                  <i class="bi bi-share text-primary me-2"></i>Redes Sociais
-                </h5>
-                <div class="d-flex gap-3">
-                  <a href="#" class="text-primary fs-4">
-                    <i class="bi bi-facebook"></i>
-                  </a>
-                  <a href="#" class="text-primary fs-4">
-                    <i class="bi bi-instagram"></i>
-                  </a>
-                  <a href="#" class="text-primary fs-4">
-                    <i class="bi bi-twitter"></i>
-                  </a>
-                  <a href="#" class="text-primary fs-4">
-                    <i class="bi bi-whatsapp"></i>
-                  </a>
+                <div class="col-md-6 mb-3">
+                  <h5 class="mb-2">
+                    <i class="bi bi-share text-primary me-2"></i>Redes Sociais
+                  </h5>
+                  <div class="d-flex gap-3">
+                    <a href="#" class="text-primary fs-4" title="Facebook">
+                      <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" class="text-primary fs-4" title="Instagram">
+                      <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="#" class="text-primary fs-4" title="Twitter">
+                      <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="#" class="text-primary fs-4" title="WhatsApp">
+                      <i class="bi bi-whatsapp"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-4">
-          <div class="card h-100">
-            <div class="card-body p-4">
-              <h3 class="card-title text-primary mb-4">
-                <i class="bi bi-chat-dots me-2"></i>Envie uma Mensagem
-              </h3>
-
-              <form>
-                <div class="mb-3">
-                  <label for="name" class="form-label">Nome Completo</label>
-                  <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-
-                <div class="mb-3">
-                  <label for="email" class="form-label">E-mail</label>
-                  <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-
-                <div class="mb-3">
-                  <label for="subject" class="form-label">Assunto</label>
-                  <select class="form-select" id="subject" name="subject" required>
-                    <option value="">Selecione um assunto</option>
-                    <option value="duvida">Dúvida sobre a plataforma</option>
-                    <option value="problema">Problema técnico</option>
-                    <option value="sugestao">Sugestão de melhoria</option>
-                    <option value="parceria">Proposta de parceria</option>
-                    <option value="outro">Outro</option>
-                  </select>
-                </div>
-
-                <div class="mb-4">
-                  <label for="message" class="form-label">Mensagem</label>
-                  <textarea class="form-control" id="message" name="message" rows="4" placeholder="Descreva sua dúvida, sugestão ou problema..." required></textarea>
-                </div>
-
-                <div class="d-grid">
-                  <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="bi bi-send me-2"></i>Enviar Mensagem
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card mt-5">
+      <div class="card mt-4">
         <div class="card-body p-4">
           <h3 class="card-title text-primary mb-4">
             <i class="bi bi-question-circle me-2"></i>Perguntas Frequentes

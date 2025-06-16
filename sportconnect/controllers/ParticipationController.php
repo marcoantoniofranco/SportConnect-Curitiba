@@ -11,7 +11,7 @@ class ParticipationController {
     public function __construct() {
         $this->db = new Database();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: index.php?url=auth/loginForm');
             exit();
         }
         $this->user = new User();
@@ -19,24 +19,22 @@ class ParticipationController {
     }
 
     public function apply($post_id) {
-        require_once __DIR__ . "/../includes/csrf.php";
-        
-        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
             $_SESSION['error'] = 'Erro de segurança: Token inválido';
-            header('Location: /posts/view/' . $post_id);
+            header('Location: index.php?url=post/view/' . $post_id);
             exit();
         }
 
         $post = new Post();
         if (!$post->findById($post_id)) {
-            $_SESSION['error'] = 'Post not found';
-            header('Location: /posts');
+            $_SESSION['error'] = 'Evento não encontrado';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         if ($post->getUserId() === $_SESSION['user_id']) {
-            $_SESSION['error'] = 'You cannot apply to your own post';
-            header('Location: /posts/view/' . $post_id);
+            $_SESSION['error'] = 'Você não pode se candidatar ao seu próprio evento';
+            header('Location: index.php?url=post/view/' . $post_id);
             exit();
         }
 
@@ -48,8 +46,8 @@ class ParticipationController {
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-            $_SESSION['error'] = 'You have already applied to this post';
-            header('Location: /posts/view/' . $post_id);
+            $_SESSION['error'] = 'Você já se candidatou a este evento';
+            header('Location: index.php?url=post/view/' . $post_id);
             exit();
         }
 
@@ -59,27 +57,25 @@ class ParticipationController {
         $stmt->bindParam(':user_id', $_SESSION['user_id']);
 
         if ($stmt->execute()) {
-            $_SESSION['success'] = 'Application submitted successfully';
+            $_SESSION['success'] = 'Candidatura enviada com sucesso!';
         } else {
-            $_SESSION['error'] = 'Error submitting application';
+            $_SESSION['error'] = 'Erro ao enviar candidatura';
         }
 
-        header('Location: /posts/view/' . $post_id);
+        header('Location: index.php?url=post/view/' . $post_id);
         exit();
     }
 
     public function respond($participation_id, $status) {
-        require_once __DIR__ . "/../includes/csrf.php";
-        
-        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
             $_SESSION['error'] = 'Erro de segurança: Token inválido';
-            header('Location: /posts');
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         if (!in_array($status, ['aceito', 'recusado'])) {
-            $_SESSION['error'] = 'Invalid status';
-            header('Location: /posts');
+            $_SESSION['error'] = 'Status inválido';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
@@ -91,21 +87,21 @@ class ParticipationController {
         $participation = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$participation) {
-            $_SESSION['error'] = 'Participation not found';
-            header('Location: /posts');
+            $_SESSION['error'] = 'Participação não encontrada';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         $post = new Post();
         if (!$post->findById($participation['id_publicacao'])) {
-            $_SESSION['error'] = 'Post not found';
-            header('Location: /posts');
+            $_SESSION['error'] = 'Evento não encontrado';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         if ($post->getUserId() !== $_SESSION['user_id']) {
-            $_SESSION['error'] = 'Unauthorized';
-            header('Location: /posts');
+            $_SESSION['error'] = 'Não autorizado';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
@@ -115,12 +111,12 @@ class ParticipationController {
         $stmt->bindParam(':id', $participation_id);
         
         if ($stmt->execute()) {
-            $_SESSION['success'] = 'Participation ' . $status . ' successfully';
+            $_SESSION['success'] = 'Participação ' . $status . ' com sucesso!';
         } else {
-            $_SESSION['error'] = 'Error updating participation';
+            $_SESSION['error'] = 'Erro ao atualizar participação';
         }
 
-        header('Location: /posts/view/' . $post->getId());
+        header('Location: index.php?url=post/view/' . $post->getId());
         exit();
     }
 } 
