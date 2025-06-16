@@ -1,11 +1,7 @@
 <?php 
-<<<<<<< Updated upstream
 $pageTitle = 'Criar Evento - SportConnect Curitiba';
-include __DIR__ . '/../partials/header.php'; 
-=======
-require_once __DIR__ . "/../partials/header.php";
-require_once __DIR__ . "/../../includes/csrf.php";
->>>>>>> Stashed changes
+require_once __DIR__ . '/../partials/header.php';
+require_once __DIR__ . '/../../includes/csrf.php';
 ?>
 
 <div class="container py-5">
@@ -17,20 +13,11 @@ require_once __DIR__ . "/../../includes/csrf.php";
         <p class="lead text-muted">Organize um evento esportivo e encontre parceiros para jogar</p>
       </div>
 
-<<<<<<< Updated upstream
       <div class="card">
         <div class="card-body p-4">
-          <form action="index.php?url=post/create" method="POST">
-=======
-    <form action="/posts/create" method="POST" class="mt-4">
-        <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
-        
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-        </div>
->>>>>>> Stashed changes
-
+          <form action="/posts/create" method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
+            
             <div class="mb-4">
               <label for="title" class="form-label fw-semibold">
                 <i class="bi bi-card-text me-2"></i>Título do Evento
@@ -108,7 +95,7 @@ require_once __DIR__ . "/../../includes/csrf.php";
             </div>
 
             <div class="d-flex gap-3 justify-content-end">
-              <a href="index.php?url=post/list" class="btn btn-outline-secondary btn-lg">
+              <a href="/posts" class="btn btn-outline-secondary btn-lg">
                 <i class="bi bi-arrow-left me-2"></i>Cancelar
               </a>
               <button type="submit" class="btn btn-primary btn-lg">
