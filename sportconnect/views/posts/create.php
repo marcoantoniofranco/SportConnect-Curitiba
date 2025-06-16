@@ -1,9 +1,7 @@
 <?php 
 $pageTitle = 'Criar Evento - SportConnect Curitiba';
-include __DIR__ . '/../partials/header.php'; 
-
-$form_data = $_SESSION['form_data'] ?? [];
-unset($_SESSION['form_data']);
+require_once __DIR__ . '/../partials/header.php';
+require_once __DIR__ . '/../../includes/csrf.php';
 ?>
 
 <div class="container py-5">
@@ -120,7 +118,7 @@ unset($_SESSION['form_data']);
             </div>
 
             <div class="d-flex gap-3 justify-content-end">
-              <a href="index.php?url=post/list" class="btn btn-outline-secondary btn-lg">
+              <a href="/posts" class="btn btn-outline-secondary btn-lg">
                 <i class="bi bi-arrow-left me-2"></i>Cancelar
               </a>
               <button type="submit" class="btn btn-primary btn-lg">
