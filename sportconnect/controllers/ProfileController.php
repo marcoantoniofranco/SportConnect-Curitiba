@@ -7,24 +7,10 @@ class ProfileController {
         
 
         // Buscar dados do usuário no banco, código comentado para teste!
-        // require_once __DIR__ . "/../models/User.php";
-        // $user_id = $_SESSION['user_id'];
-        // $user = User::buscarPorId($user_id);
+        require_once __DIR__ . "/../models/User.php";
+        $user_id = $_SESSION['user_id'];
+        $user = User::buscarPorId($user_id);
 
-       // USUÁRIO TESTE PARA VERIFICAR COMO A PAGINA ESTÁ
-        $user = new stdClass();
-        $user->nome = "João Silva";
-        $user->apelido = "Joãozinho";
-        $user->email = "joao.silva@email.com";
-        $user->telefone = "(41) 99999-8888";
-        $user->bio = "Apaixonado por esportes desde criança. Pratico futebol há mais de 10 anos e sempre busco novos desafios. Gosto de participar de campeonatos amadores e fazer novas amizades através do esporte.";
-        $user->profile_photo = null; // Will use default avatar
-        $user->esportes = "Futebol,Vôlei,Corrida,Basquete";
-        $user->nivel = "Intermediário";
-        $user->localizacao = "Curitiba, PR";
-        $user->disponibilidade = "Noites e fins de semana";
-        $user->idade = "28";
-        // Carregar a view
         require __DIR__ . "/../views/profile/index.php";
     }
 

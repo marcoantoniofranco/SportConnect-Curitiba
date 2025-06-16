@@ -21,7 +21,7 @@
         }
         ?>
 
-        <form action="/SportConnect-Curitiba/sportconnect/auth/recover" method="POST">
+        <form action="index.php?url=auth/recoverPassword" method="POST">
             <p>Informe seu CPF e Data de Nascimento para recuperar sua senha.</p>
             <div>
                 <label for="cpf">CPF:</label>
@@ -37,7 +37,7 @@
         </form>
 
         <div>
-            <a href="/login">Voltar para o Login</a>
+            <a href="index.php?url=auth/loginForm">Voltar para o Login</a>
         </div>
     </div>
     <?php include_once __DIR__ . "/../partials/footer.php"; ?>

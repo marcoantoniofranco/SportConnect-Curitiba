@@ -21,7 +21,7 @@
         }
         ?>
 
-        <form action="/SportConnect-Curitiba/sportconnect/auth/register" method="POST">
+        <form action="index.php?url=auth/register" method="POST">
             <div>
                 <label for="name">Nome:</label>
                 <input type="text" id="name" name="name" required>
@@ -56,7 +56,8 @@
         </form>
 
         <div>
-            <a href="/login">Já tenho uma conta</a>
+            <a href="index.php?url=auth/loginForm">Já tenho uma conta</a><br>
+            <a href="/SportConnect-Curitiba/sportconnect/home/index">Voltar ao início</a>
         </div>
     </div>
     <?php include_once __DIR__ . "/../partials/footer.php"; ?>
