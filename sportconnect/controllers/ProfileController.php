@@ -12,28 +12,16 @@ class ProfileController {
         $user = new User();
         if ($user->findById($_SESSION['user_id'])) {
             $userData = new stdClass();
-                         $userData->nome = $user->getNome();
-             $userData->email = $user->getEmail();
-             $userData->telefone = $user->getTelefone();
+            $userData->nome = $user->getNome();
+            $userData->email = $user->getEmail();
+            $userData->telefone = $user->getTelefone();
             $userData->bio = ""; 
             $userData->profile_photo = null;
             $userData->esportes = "";
-            $userData->nivel = "";
-            $userData->localizacao = "";
-            $userData->disponibilidade = "";
-            $userData->idade = "";
         } else {
-            $userData = new stdClass();
-            $userData->nome = "João Silva";
-            $userData->email = "joao.silva@email.com";
-            $userData->telefone = "(41) 99999-8888";
-            $userData->bio = "Apaixonado por esportes desde criança. Pratico futebol há mais de 10 anos e sempre busco novos desafios. Gosto de participar de campeonatos amadores e fazer novas amizades através do esporte.";
-            $userData->profile_photo = null;
-            $userData->esportes = "Futebol,Vôlei,Corrida,Basquete";
-            $userData->nivel = "Intermediário";
-            $userData->localizacao = "Curitiba, PR";
-            $userData->disponibilidade = "Noites e fins de semana";
-            $userData->idade = "28";
+            $_SESSION['error_message'] = 'Usuário não encontrado.';
+            header('Location: index.php?url=auth/loginForm');
+            exit();
         }
         
         $user = $userData;
@@ -46,25 +34,55 @@ class ProfileController {
             exit();
         }
 
-        if($_SERVER["REQUEST_METHOD"] == "POST"){
-            require_once "../includes/csrf.php";
-
-            if (!validarTokenCSRF($_POST['csrf_token'])){
-                die("Erro: CSRF Token inválido!");
-            }
-
-            $userId = $_SESSION['user_id'];
-            $nome = $_POST['nome'];
-            $esporte = $_POST['esporte'];
-
-            if(empty($nome) || empty($esporte)){
-                die('Todos os campos são obrigatórios!');
-            }
-
-            header('Location: /SportConnect-Curitiba/sportconnect/profile');
+        $userModel = new User();
+        if ($userModel->findById($_SESSION['user_id'])) {
+            $userData = new stdClass();
+            $userData->nome = $userModel->getNome();
+            $userData->email = $userModel->getEmail();
+            $userData->telefone = $userModel->getTelefone();
+            $userData->bio = ""; 
+            $userData->profile_photo = null;
+            $userData->esportes = "";
+        } else {
+            $_SESSION['error_message'] = 'Usuário não encontrado.';
+            header('Location: index.php?url=auth/loginForm');
             exit();
         }
+        
+        $user = $userData;
+
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
         require __DIR__ . "/../views/profile/edit.php";
+    }
+
+    public function update() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: index.php?url=auth/loginForm');
+            exit();
+        }
+
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
+            header('Location: index.php?url=profile/edit');
+            exit();
+        }
+
+        $nome = $_POST['nome'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $telefone = $_POST['telefone'] ?? '';
+
+        if(empty($nome) || empty($email)){
+            $_SESSION['error_message'] = 'Nome e email são obrigatórios!';
+            header('Location: index.php?url=profile/edit');
+            exit();
+        }
+
+        $_SESSION['success_message'] = 'Perfil atualizado com sucesso!';
+        header('Location: index.php?url=profile/index');
+        exit();
     }
 }
 ?>
