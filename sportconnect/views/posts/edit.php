@@ -1,4 +1,7 @@
-<?php require_once 'views/includes/header.php'; ?>
+<?php 
+require_once __DIR__ . "/../partials/header.php";
+require_once __DIR__ . "/../../includes/csrf.php";
+?>
 
 <div class="container mt-4">
     <h2>Edit Post</h2>
@@ -13,7 +16,7 @@
     <?php endif; ?>
 
     <form action="/posts/edit/<?php echo $post->getId(); ?>" method="POST" class="mt-4">
-        <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+        <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
         
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>

@@ -19,8 +19,10 @@ class ParticipationController {
     }
 
     public function apply($post_id) {
-        if (!validateCSRFToken($_POST['csrf_token'])) {
-            $_SESSION['error'] = 'Invalid form submission';
+        require_once __DIR__ . "/../includes/csrf.php";
+        
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
+            $_SESSION['error'] = 'Erro de segurança: Token inválido';
             header('Location: /posts/view/' . $post_id);
             exit();
         }
@@ -67,8 +69,10 @@ class ParticipationController {
     }
 
     public function respond($participation_id, $status) {
-        if (!validateCSRFToken($_POST['csrf_token'])) {
-            $_SESSION['error'] = 'Invalid form submission';
+        require_once __DIR__ . "/../includes/csrf.php";
+        
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
+            $_SESSION['error'] = 'Erro de segurança: Token inválido';
             header('Location: /posts');
             exit();
         }

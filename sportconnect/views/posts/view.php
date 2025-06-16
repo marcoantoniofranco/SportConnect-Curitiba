@@ -1,4 +1,7 @@
-<?php require_once 'views/includes/header.php'; ?>
+<?php 
+require_once __DIR__ . "/../partials/header.php";
+require_once __DIR__ . "/../../includes/csrf.php";
+?>
 
 <div class="container mt-4">
     <?php if (isset($_SESSION['success'])): ?>
@@ -32,7 +35,7 @@
                     <div>
                         <a href="/posts/edit/<?php echo $post->getId(); ?>" class="btn btn-secondary">Edit</a>
                         <form action="/posts/delete/<?php echo $post->getId(); ?>" method="POST" class="d-inline">
-                            <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                            <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
                         </form>
                     </div>
@@ -83,7 +86,7 @@
                 <div class="mb-4">
                     <h5>Interested in participating?</h5>
                     <form action="/participation/apply/<?php echo $post->getId(); ?>" method="POST">
-                        <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                        <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
                         <button type="submit" class="btn btn-primary">Apply to Participate</button>
                     </form>
                 </div>
@@ -121,11 +124,11 @@
                                         <td>
                                             <?php if ($participation->getStatus() === 'pending'): ?>
                                                 <form action="/participation/respond/<?php echo $participation->getId(); ?>/accepted" method="POST" class="d-inline">
-                                                    <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                                                    <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
                                                     <button type="submit" class="btn btn-success btn-sm">Accept</button>
                                                 </form>
                                                 <form action="/participation/respond/<?php echo $participation->getId(); ?>/rejected" method="POST" class="d-inline">
-                                                    <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                                                    <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
                                                     <button type="submit" class="btn btn-danger btn-sm">Reject</button>
                                                 </form>
                                             <?php endif; ?>
@@ -145,4 +148,4 @@
     </div>
 </div>
 
-<?php require_once 'views/includes/footer.php'; ?> 
+<?php require_once __DIR__ . "/../partials/footer.php"; ?> 

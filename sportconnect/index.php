@@ -5,6 +5,10 @@ require_once 'controllers/ProfileController.php';
 require_once 'controllers/AuthController.php';
 require_once 'controllers/PostController.php';
 
+// Verificar se existe cookie de "Lembrar-me"
+$authController = new AuthController();
+$authController->checkRememberMe();
+
 $url = isset($_GET['url']) ? $_GET['url'] : 'home/index';
 $url = rtrim($url, '/');
 $url = explode('/', $url);

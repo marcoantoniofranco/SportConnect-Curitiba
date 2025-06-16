@@ -22,6 +22,7 @@ class AuthController {
 
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
+        $remember_me = isset($_POST['remember_me']);
 
         if (empty($email) || empty($password)) {
             $_SESSION['error_message'] = 'Por favor, preencha todos os campos.';
@@ -34,6 +35,15 @@ class AuthController {
         if ($user && password_verify($password, $user['senha'])) {
             setUserSession($user['id_usuario']);
             $_SESSION['user_name'] = $user['nome'];
+
+            if ($remember_me) {
+                $token = bin2hex(random_bytes(32));
+                setcookie('remember_token', $token, time() + (86400 * 30), '/', '', true, true); // 30 dias, seguro e httpOnly
+                
+                // Salvar o token no banco
+                $userModel->saveRememberToken($user['id_usuario'], $token);
+            }
+
             header('Location: index.php?url=home/index');
             exit();
         }
@@ -41,6 +51,24 @@ class AuthController {
         $_SESSION['error_message'] = 'Email ou senha inválidos.';
         header('Location: index.php?url=auth/loginForm');
         exit();
+    }
+
+    public function checkRememberMe() {
+        if (isset($_COOKIE['remember_token'])) {
+            $token = $_COOKIE['remember_token'];
+            $userModel = new User();
+            $user = $userModel->findByRememberToken($token);
+            
+            if ($user) {
+                setUserSession($user['id_usuario']);
+                $_SESSION['user_name'] = $user['nome'];
+                return true;
+            }
+            
+            // Se o token for inválido, remove o cookie
+            setcookie('remember_token', '', time() - 3600, '/');
+        }
+        return false;
     }
 
     public function registerForm() {
@@ -183,6 +211,12 @@ class AuthController {
     }
 
     public function logout() {
+        if (isset($_COOKIE['remember_token'])) {
+            $token = $_COOKIE['remember_token'];
+            $userModel = new User();
+            $userModel->removeRememberToken($token);
+            setcookie('remember_token', '', time() - 3600, '/');
+        }
         logout();
         header('Location: index.php?url=auth/loginForm');
         exit();

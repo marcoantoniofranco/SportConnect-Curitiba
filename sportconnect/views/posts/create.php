@@ -1,6 +1,11 @@
 <?php 
+<<<<<<< Updated upstream
 $pageTitle = 'Criar Evento - SportConnect Curitiba';
 include __DIR__ . '/../partials/header.php'; 
+=======
+require_once __DIR__ . "/../partials/header.php";
+require_once __DIR__ . "/../../includes/csrf.php";
+>>>>>>> Stashed changes
 ?>
 
 <div class="container py-5">
@@ -12,9 +17,19 @@ include __DIR__ . '/../partials/header.php';
         <p class="lead text-muted">Organize um evento esportivo e encontre parceiros para jogar</p>
       </div>
 
+<<<<<<< Updated upstream
       <div class="card">
         <div class="card-body p-4">
           <form action="index.php?url=post/create" method="POST">
+=======
+    <form action="/posts/create" method="POST" class="mt-4">
+        <input type="hidden" name="csrf_token" value="<?php echo gerarTokenCSRF(); ?>">
+        
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+>>>>>>> Stashed changes
 
             <div class="mb-4">
               <label for="title" class="form-label fw-semibold">

@@ -26,11 +26,17 @@ class PostController {
 
     public function create() {
         $this->checkAuth();
+        require_once __DIR__ . "/../includes/csrf.php";
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $required_fields = ['title', 'description', 'location', 'event_date', 'slots', 'category_id'];
+            if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
+                $_SESSION['error'] = 'Erro de segurança: Token inválido';
+                header('Location: /posts/create');
+                exit();
+            }
+
+            $required_fields = ['titulo', 'descricao', 'local', 'data_evento', 'vagas', 'id_categoria'];
             $hasError = false;
-            
             foreach ($required_fields as $field) {
                 if (empty($_POST[$field])) {
                     $_SESSION['error_message'] = 'Todos os campos são obrigatórios';
@@ -40,16 +46,14 @@ class PostController {
             }
 
             if (!$hasError) {
-                $event_datetime = $_POST['event_date'] . ' ' . $_POST['event_time'];
-                
                 $dados = [
                     'id_usuario' => $_SESSION['user_id'],
-                    'id_categoria' => $_POST['category_id'],
-                    'titulo' => $_POST['title'],
-                    'descricao' => $_POST['description'],
-                    'local' => $_POST['location'],
-                    'data_evento' => $event_datetime,
-                    'vagas' => $_POST['slots']
+                    'id_categoria' => $_POST['id_categoria'],
+                    'titulo' => $_POST['titulo'],
+                    'descricao' => $_POST['descricao'],
+                    'local' => $_POST['local'],
+                    'data_evento' => $_POST['data_evento'],
+                    'vagas' => $_POST['vagas']
                 ];
 
                 $post = new Post();
@@ -71,6 +75,7 @@ class PostController {
 
     public function edit($id) {
         $this->checkAuth();
+        require_once __DIR__ . "/../includes/csrf.php";
         
         $post = new Post();
         if (!$post->findById($id)) {
@@ -86,9 +91,14 @@ class PostController {
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
+                $_SESSION['error'] = 'Erro de segurança: Token inválido';
+                header('Location: /posts/edit/' . $id);
+                exit();
+            }
+
             $required_fields = ['titulo', 'descricao', 'local', 'data_evento', 'vagas', 'id_categoria'];
             $hasError = false;
-            
             foreach ($required_fields as $field) {
                 if (empty($_POST[$field])) {
                     $_SESSION['error_message'] = 'Todos os campos são obrigatórios';
@@ -125,7 +135,6 @@ class PostController {
 
     public function delete($id) {
         $this->checkAuth();
-        
         $post = new Post();
         if (!$post->findById($id)) {
             $_SESSION['error_message'] = 'Evento não encontrado';
