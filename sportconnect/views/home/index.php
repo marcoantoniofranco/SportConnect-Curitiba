@@ -49,7 +49,9 @@ include __DIR__ . '/../partials/header.php';
         <div class="card h-100 text-center event-card">
           <div class="card-body p-4">
             <div class="mb-3">
-              <i class="bi bi-dribbble text-primary" style="font-size: 3rem;"></i>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-dribbble text-primary" style="font-size: 2.5rem;"></i>
+              </div>
             </div>
             <h5 class="card-title">Futebol</h5>
             <p class="card-text text-muted">Monte seu time ou encontre partidas para completar o grupo</p>
@@ -61,7 +63,9 @@ include __DIR__ . '/../partials/header.php';
         <div class="card h-100 text-center event-card">
           <div class="card-body p-4">
             <div class="mb-3">
-              <i class="bi bi-circle text-primary" style="font-size: 3rem;"></i>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-trophy text-primary" style="font-size: 2.5rem;"></i>
+              </div>
             </div>
             <h5 class="card-title">Basquete</h5>
             <p class="card-text text-muted">Encontre jogadores para seu time e organize campeonatos</p>
@@ -73,7 +77,9 @@ include __DIR__ . '/../partials/header.php';
         <div class="card h-100 text-center event-card">
           <div class="card-body p-4">
             <div class="mb-3">
-              <i class="bi bi-volleyball text-primary" style="font-size: 3rem;"></i>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-record-circle text-primary" style="font-size: 2.5rem;"></i>
+              </div>
             </div>
             <h5 class="card-title">Vôlei</h5>
             <p class="card-text text-muted">Organize jogos e encontre levantadores, atacantes e líberos</p>
@@ -85,7 +91,9 @@ include __DIR__ . '/../partials/header.php';
         <div class="card h-100 text-center event-card">
           <div class="card-body p-4">
             <div class="mb-3">
-              <i class="bi bi-person-walking text-primary" style="font-size: 3rem;"></i>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-person-arms-up text-primary" style="font-size: 2.5rem;"></i>
+              </div>
             </div>
             <h5 class="card-title">Corrida</h5>
             <p class="card-text text-muted">Encontre parceiros para treinar e participar de corridas</p>

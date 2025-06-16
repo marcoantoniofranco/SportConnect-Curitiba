@@ -9,7 +9,9 @@ include __DIR__ . '/../partials/header.php';
       <div class="col-md-6 col-lg-4">
         <div class="auth-card">
           <div class="auth-header">
-            <i class="bi bi-trophy-fill text-primary" style="font-size: 3rem;"></i>
+            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+              <i class="bi bi-person-check-fill text-primary" style="font-size: 2.5rem;"></i>
+            </div>
             <h2 class="mt-3 mb-1">Bem-vindo de volta!</h2>
             <p class="text-muted">Entre na sua conta SportConnect</p>
           </div>

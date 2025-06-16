@@ -7,7 +7,9 @@ include __DIR__ . '/../partials/header.php';
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="text-center mb-5">
-        <i class="bi bi-trophy-fill text-primary" style="font-size: 4rem;"></i>
+        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+          <i class="bi bi-trophy-fill text-primary" style="font-size: 3.5rem;"></i>
+        </div>
         <h1 class="display-4 fw-bold mt-3">Sobre o SportConnect</h1>
         <p class="lead text-muted">Conectando atletas e promovendo o esporte em Curitiba</p>
       </div>
@@ -110,20 +112,28 @@ include __DIR__ . '/../partials/header.php';
           </p>
           <div class="row text-center">
             <div class="col-6 col-md-3 mb-3">
-              <i class="bi bi-dribbble text-primary fs-2"></i>
-              <p class="mt-2 mb-0">Futebol</p>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                <i class="bi bi-dribbble text-primary fs-4"></i>
+              </div>
+              <p class="mt-2 mb-0 fw-semibold">Futebol</p>
             </div>
             <div class="col-6 col-md-3 mb-3">
-              <i class="bi bi-circle text-primary fs-2"></i>
-              <p class="mt-2 mb-0">Basquete</p>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                <i class="bi bi-trophy text-primary fs-4"></i>
+              </div>
+              <p class="mt-2 mb-0 fw-semibold">Basquete</p>
             </div>
             <div class="col-6 col-md-3 mb-3">
-              <i class="bi bi-volleyball text-primary fs-2"></i>
-              <p class="mt-2 mb-0">Vôlei</p>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                <i class="bi bi-record-circle text-primary fs-4"></i>
+              </div>
+              <p class="mt-2 mb-0 fw-semibold">Vôlei</p>
             </div>
             <div class="col-6 col-md-3 mb-3">
-              <i class="bi bi-person-walking text-primary fs-2"></i>
-              <p class="mt-2 mb-0">Corrida</p>
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                <i class="bi bi-person-arms-up text-primary fs-4"></i>
+              </div>
+              <p class="mt-2 mb-0 fw-semibold">Corrida</p>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ require_once 'controllers/ProfileController.php';
 require_once 'controllers/AuthController.php';
 require_once 'controllers/PostController.php';
 require_once 'controllers/ParticipationController.php';
+require_once 'controllers/CategoryController.php';
 
 $authController = new AuthController();
 $authController->checkRememberMe();

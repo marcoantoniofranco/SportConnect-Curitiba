@@ -18,7 +18,9 @@ include __DIR__ . '/../partials/header.php';
 
   <?php if (empty($posts)): ?>
   <div class="text-center py-5">
-    <i class="bi bi-calendar-x text-muted" style="font-size: 4rem;"></i>
+    <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 120px; height: 120px;">
+      <i class="bi bi-calendar-plus text-primary" style="font-size: 3rem;"></i>
+    </div>
     <h3 class="mt-3 text-muted">Nenhum evento encontrado</h3>
     <p class="text-muted mb-4">Seja o primeiro a criar um evento esportivo!</p>
     <a href="index.php?url=post/create" class="btn btn-primary btn-lg">
@@ -32,12 +34,14 @@ include __DIR__ . '/../partials/header.php';
       <div class="card event-card h-100">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-3">
-            <span class="badge bg-primary fs-6 px-3 py-2">
-              <i class="bi bi-trophy me-1"></i>
-              Evento
-            </span>
+            <div class="d-flex align-items-center">
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                <i class="bi bi-calendar-event text-primary" style="font-size: 0.9rem;"></i>
+              </div>
+              <span class="badge bg-primary px-2 py-1">Evento</span>
+            </div>
             <small class="text-muted">
-              <?php echo date('d/m/Y', strtotime($post['data_evento'])); ?>
+              <i class="bi bi-clock me-1"></i><?php echo date('d/m/Y', strtotime($post['data_evento'])); ?>
             </small>
           </div>
 

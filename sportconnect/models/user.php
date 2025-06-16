@@ -154,13 +154,16 @@ class User
     {
         try {
             $conexao = $this->db->getConexao();
-            $expires_at = date('Y-m-d H:i:s', time() + (86400 * 30));
             
-            $sql = "INSERT INTO remember_tokens (user_id, token, expires_at) VALUES (:user_id, :token, :expires_at)";
+            $sql = "DELETE FROM lembrar_tokens WHERE id_usuario = :user_id";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->execute();
+            
+            $sql = "INSERT INTO lembrar_tokens (id_usuario, token) VALUES (:user_id, :token)";
             $stmt = $conexao->prepare($sql);
             $stmt->bindParam(':user_id', $user_id);
             $stmt->bindParam(':token', $token);
-            $stmt->bindParam(':expires_at', $expires_at);
             return $stmt->execute();
         } catch (PDOException $e) {
             return false;
@@ -172,8 +175,8 @@ class User
         try {
             $conexao = $this->db->getConexao();
             $sql = "SELECT u.* FROM usuarios u 
-                    INNER JOIN remember_tokens rt ON u.id_usuario = rt.user_id 
-                    WHERE rt.token = :token AND rt.expires_at > NOW()";
+                    INNER JOIN lembrar_tokens lt ON u.id_usuario = lt.id_usuario 
+                    WHERE lt.token = :token AND lt.expira_em > NOW()";
             $stmt = $conexao->prepare($sql);
             $stmt->bindParam(':token', $token);
             $stmt->execute();
@@ -187,7 +190,7 @@ class User
     {
         try {
             $conexao = $this->db->getConexao();
-            $sql = "DELETE FROM remember_tokens WHERE token = :token";
+            $sql = "DELETE FROM lembrar_tokens WHERE token = :token";
             $stmt = $conexao->prepare($sql);
             $stmt->bindParam(':token', $token);
             return $stmt->execute();

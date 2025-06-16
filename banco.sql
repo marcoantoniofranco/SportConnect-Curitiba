@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS sportconnect;
 CREATE DATABASE sportconnect;
 USE sportconnect;
 
@@ -47,7 +46,7 @@ CREATE TABLE participacoes (
 CREATE TABLE lembrar_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
-    token VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL UNIQUE,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     expira_em TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP + INTERVAL 30 DAY),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE

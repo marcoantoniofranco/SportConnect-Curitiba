@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Post.php';
 require_once __DIR__ . '/../models/Category.php';
@@ -28,7 +29,7 @@ class PostController {
         $this->checkAuth();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+            if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
                 $_SESSION['error'] = 'Erro de segurança: Token inválido';
                 header('Location: index.php?url=post/create');
                 exit();
@@ -104,21 +105,13 @@ class PostController {
 
             $post = new Post();
             if ($post->create($dados)) {
-                $_SESSION['success'] = 'Evento criado com sucesso!';
                 unset($_SESSION['form_data']);
+                $_SESSION['success'] = 'Evento criado com sucesso!';
+                regenerarTokenCSRF();
                 header('Location: index.php?url=post/list');
                 exit();
             } else {
-                $_SESSION['error'] = 'Erro ao criar evento. Verifique se todos os campos estão preenchidos corretamente.';
-                $_SESSION['form_data'] = [
-                    'title' => $title,
-                    'description' => $description,
-                    'location' => $location,
-                    'event_date' => $event_date,
-                    'event_time' => $event_time,
-                    'slots' => $slots,
-                    'category_id' => $category_id
-                ];
+                $_SESSION['error'] = 'Erro ao criar evento. Tente novamente.';
                 header('Location: index.php?url=post/create');
                 exit();
             }
@@ -127,9 +120,7 @@ class PostController {
         $category = new Category();
         $categories = $category->findAll();
         
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        gerarTokenCSRF();
         
         require_once __DIR__ . '/../views/posts/create.php';
     }
@@ -151,7 +142,7 @@ class PostController {
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+            if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
                 $_SESSION['error'] = 'Erro de segurança: Token inválido';
                 header('Location: index.php?url=post/edit/' . $id);
                 exit();
@@ -185,7 +176,8 @@ class PostController {
 
             if ($post->update($id, $dados)) {
                 $_SESSION['success'] = 'Evento atualizado com sucesso!';
-                header('Location: index.php?url=post/list');
+                regenerarTokenCSRF();
+                header('Location: index.php?url=post/view/' . $id);
                 exit();
             } else {
                 $_SESSION['error'] = 'Erro ao atualizar evento';
@@ -197,9 +189,7 @@ class PostController {
         $category = new Category();
         $categories = $category->findAll();
         
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        gerarTokenCSRF();
         
         require_once __DIR__ . '/../views/posts/edit.php';
     }
@@ -207,13 +197,7 @@ class PostController {
     public function delete($id) {
         $this->checkAuth();
         
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $_SESSION['error'] = 'Método não permitido';
-            header('Location: index.php?url=post/list');
-            exit();
-        }
-
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
             $_SESSION['error'] = 'Erro de segurança: Token inválido';
             header('Location: index.php?url=post/list');
             exit();
@@ -234,6 +218,7 @@ class PostController {
 
         if ($post->delete($id)) {
             $_SESSION['success'] = 'Evento excluído com sucesso!';
+            regenerarTokenCSRF();
         } else {
             $_SESSION['error'] = 'Erro ao excluir evento';
         }
@@ -269,9 +254,7 @@ class PostController {
         $stmt->execute();
         $participations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        gerarTokenCSRF();
 
         require_once __DIR__ . '/../views/posts/view.php';
     }
