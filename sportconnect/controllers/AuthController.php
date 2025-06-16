@@ -126,6 +126,62 @@ class AuthController {
         }
     }
 
+    public function resetPasswordForm() {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+        require_once __DIR__ . '/../views/auth/Reset.php';
+    }
+
+    public function updatePassword() {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
+            header('Location: index.php?url=auth/resetPasswordForm');
+            exit();
+        }
+        unset($_SESSION['csrf_token']);
+
+        $new_password = $_POST['new_password'] ?? '';
+        $confirm_password = $_POST['confirm_password'] ?? '';
+
+        if (empty($new_password) || empty($confirm_password)) {
+            $_SESSION['error_message'] = 'Todos os campos são obrigatórios.';
+            header('Location: index.php?url=auth/resetPasswordForm');
+            exit();
+        }
+
+        if ($new_password !== $confirm_password) {
+            $_SESSION['error_message'] = 'As senhas não coincidem.';
+            header('Location: index.php?url=auth/resetPasswordForm');
+            exit();
+        }
+
+        if (strlen($new_password) < 6) {
+            $_SESSION['error_message'] = 'A senha deve ter pelo menos 6 caracteres.';
+            header('Location: index.php?url=auth/resetPasswordForm');
+            exit();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['error_message'] = 'Sessão expirada. Faça login novamente.';
+            header('Location: index.php?url=auth/loginForm');
+            exit();
+        }
+
+        $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
+        $userModel = new User();
+        
+        if ($userModel->updatePassword($_SESSION['user_id'], $hashedPassword)) {
+            $_SESSION['success_message'] = 'Senha alterada com sucesso!';
+            header('Location: index.php?url=profile/index');
+            exit();
+        } else {
+            $_SESSION['error_message'] = 'Erro ao alterar a senha. Tente novamente.';
+            header('Location: index.php?url=auth/resetPasswordForm');
+            exit();
+        }
+    }
+
     public function logout() {
         logout();
         header('Location: index.php?url=auth/loginForm');

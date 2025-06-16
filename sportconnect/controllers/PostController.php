@@ -11,150 +11,155 @@ class PostController {
 
     public function __construct() {
         $this->db = new Database();
+    }
+
+    private function checkAuth() {
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: index.php?url=auth/loginForm');
             exit();
         }
-        $this->user = new User();
-        $this->user->findById($_SESSION['user_id']);
+        if (!$this->user) {
+            $this->user = new User();
+            $this->user->findById($_SESSION['user_id']);
+        }
     }
 
     public function create() {
+        $this->checkAuth();
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!validateCSRFToken($_POST['csrf_token'])) {
-                $_SESSION['error'] = 'Invalid form submission';
-                header('Location: /posts/create');
-                exit();
-            }
-
-            $required_fields = ['titulo', 'descricao', 'local', 'data_evento', 'vagas', 'id_categoria'];
+            $required_fields = ['title', 'description', 'location', 'event_date', 'slots', 'category_id'];
+            $hasError = false;
+            
             foreach ($required_fields as $field) {
                 if (empty($_POST[$field])) {
-                    $_SESSION['error'] = 'All fields are required';
-                    header('Location: /posts/create');
-                    exit();
+                    $_SESSION['error_message'] = 'Todos os campos são obrigatórios';
+                    $hasError = true;
+                    break;
                 }
             }
 
-            $dados = [
-                'id_usuario' => $_SESSION['user_id'],
-                'id_categoria' => $_POST['id_categoria'],
-                'titulo' => $_POST['titulo'],
-                'descricao' => $_POST['descricao'],
-                'local' => $_POST['local'],
-                'data_evento' => $_POST['data_evento'],
-                'vagas' => $_POST['vagas']
-            ];
+            if (!$hasError) {
+                $event_datetime = $_POST['event_date'] . ' ' . $_POST['event_time'];
+                
+                $dados = [
+                    'id_usuario' => $_SESSION['user_id'],
+                    'id_categoria' => $_POST['category_id'],
+                    'titulo' => $_POST['title'],
+                    'descricao' => $_POST['description'],
+                    'local' => $_POST['location'],
+                    'data_evento' => $event_datetime,
+                    'vagas' => $_POST['slots']
+                ];
 
-            $post = new Post();
-            if ($post->create($dados)) {
-                $_SESSION['success'] = 'Post created successfully';
-                header('Location: /posts');
-                exit();
-            } else {
-                $_SESSION['error'] = 'Error creating post';
-                header('Location: /posts/create');
-                exit();
+                $post = new Post();
+                if ($post->create($dados)) {
+                    $_SESSION['success_message'] = 'Evento criado com sucesso!';
+                    header('Location: index.php?url=post/list');
+                    exit();
+                } else {
+                    $_SESSION['error_message'] = 'Erro ao criar evento';
+                }
             }
         }
 
         $category = new Category();
         $categories = $category->findAll();
         
-        require_once 'views/posts/create.php';
+        require_once __DIR__ . '/../views/posts/create.php';
     }
 
     public function edit($id) {
+        $this->checkAuth();
+        
         $post = new Post();
         if (!$post->findById($id)) {
-            $_SESSION['error'] = 'Post not found';
-            header('Location: /posts');
+            $_SESSION['error_message'] = 'Evento não encontrado';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         if ($post->getUserId() !== $_SESSION['user_id']) {
-            $_SESSION['error'] = 'Post not found or unauthorized';
-            header('Location: /posts');
+            $_SESSION['error_message'] = 'Você não tem permissão para editar este evento';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!validateCSRFToken($_POST['csrf_token'])) {
-                $_SESSION['error'] = 'Invalid form submission';
-                header('Location: /posts/edit/' . $id);
-                exit();
-            }
-
             $required_fields = ['titulo', 'descricao', 'local', 'data_evento', 'vagas', 'id_categoria'];
+            $hasError = false;
+            
             foreach ($required_fields as $field) {
                 if (empty($_POST[$field])) {
-                    $_SESSION['error'] = 'All fields are required';
-                    header('Location: /posts/edit/' . $id);
-                    exit();
+                    $_SESSION['error_message'] = 'Todos os campos são obrigatórios';
+                    $hasError = true;
+                    break;
                 }
             }
 
-            $dados = [
-                'id_categoria' => $_POST['id_categoria'],
-                'titulo' => $_POST['titulo'],
-                'descricao' => $_POST['descricao'],
-                'local' => $_POST['local'],
-                'data_evento' => $_POST['data_evento'],
-                'vagas' => $_POST['vagas']
-            ];
+            if (!$hasError) {
+                $dados = [
+                    'id_categoria' => $_POST['id_categoria'],
+                    'titulo' => $_POST['titulo'],
+                    'descricao' => $_POST['descricao'],
+                    'local' => $_POST['local'],
+                    'data_evento' => $_POST['data_evento'],
+                    'vagas' => $_POST['vagas']
+                ];
 
-            if ($post->update($id, $dados)) {
-                $_SESSION['success'] = 'Post updated successfully';
-                header('Location: /posts');
-                exit();
-            } else {
-                $_SESSION['error'] = 'Error updating post';
-                header('Location: /posts/edit/' . $id);
-                exit();
+                if ($post->update($id, $dados)) {
+                    $_SESSION['success_message'] = 'Evento atualizado com sucesso!';
+                    header('Location: index.php?url=post/list');
+                    exit();
+                } else {
+                    $_SESSION['error_message'] = 'Erro ao atualizar evento';
+                }
             }
         }
 
         $category = new Category();
         $categories = $category->findAll();
         
-        require_once 'views/posts/edit.php';
+        require_once __DIR__ . '/../views/posts/edit.php';
     }
 
     public function delete($id) {
+        $this->checkAuth();
+        
         $post = new Post();
         if (!$post->findById($id)) {
-            $_SESSION['error'] = 'Post not found';
-            header('Location: /posts');
+            $_SESSION['error_message'] = 'Evento não encontrado';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         if ($post->getUserId() !== $_SESSION['user_id']) {
-            $_SESSION['error'] = 'Post not found or unauthorized';
-            header('Location: /posts');
+            $_SESSION['error_message'] = 'Você não tem permissão para excluir este evento';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
         if ($post->delete($id)) {
-            $_SESSION['success'] = 'Post deleted successfully';
+            $_SESSION['success_message'] = 'Evento excluído com sucesso!';
         } else {
-            $_SESSION['error'] = 'Error deleting post';
+            $_SESSION['error_message'] = 'Erro ao excluir evento';
         }
 
-        header('Location: /posts');
+        header('Location: index.php?url=post/list');
         exit();
     }
 
     public function list() {
         $post = new Post();
         $posts = $post->findAll();
-        require_once 'views/posts/list.php';
+        require_once __DIR__ . '/../views/posts/list.php';
     }
 
     public function view($id) {
         $post = new Post();
         if (!$post->findById($id)) {
-            $_SESSION['error'] = 'Post not found';
-            header('Location: /posts');
+            $_SESSION['error_message'] = 'Evento não encontrado';
+            header('Location: index.php?url=post/list');
             exit();
         }
 
@@ -171,6 +176,6 @@ class PostController {
         $stmt->execute();
         $participations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        require_once 'views/posts/view.php';
+        require_once __DIR__ . '/../views/posts/view.php';
     }
 } 

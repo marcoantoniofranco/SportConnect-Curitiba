@@ -1,62 +1,210 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/SportConnect-Curitiba/sportconnect/public/css/style.css">
-    <title>Contato</title>
-</head>
-<body>
-    <?php include_once __DIR__ . "/../partials/header.php"; ?>
-    <main class="container">
-        <section class="contact-section">
-            <div class="contact-content">
-                <h2>Fale Conosco</h2>
-                <p>Tem alguma dúvida, sugestão ou precisa de ajuda? Entre em contato conosco!</p>
+<?php 
+$pageTitle = 'Contato - SportConnect Curitiba';
+include __DIR__ . '/../partials/header.php'; 
+?>
 
-                <div class="contact-grid">
-                    <div class="contact-card">
-                        <h3>Atendimento</h3>
-                        <p>Segunda a Sexta: 9h às 18h</p>
-                        <p>Sábado: 9h às 12h</p>
-                    </div>
-                    <div class="contact-card">
-                        <h3>Canais de Contato</h3>
-                        <p>Email: contato@sportconnect.com.br</p>
-                        <p>WhatsApp: (41) 99999-9999</p>
-                    </div>
-                    <div class="contact-card">
-                        <h3>Redes Sociais</h3>
-                        <p>Instagram: @sportconnect</p>
-                        <p>Facebook: /sportconnect</p>
-                    </div>
-                </div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="text-center mb-5">
+        <i class="bi bi-envelope-fill text-primary" style="font-size: 4rem;"></i>
+        <h1 class="display-4 fw-bold mt-3">Entre em Contato</h1>
+        <p class="lead text-muted">Estamos aqui para ajudar você a se conectar com outros atletas</p>
+      </div>
 
-                <div class="contact-form">
-                    <h2>Formulário de Contato</h2>
-                    <form action="/contato/enviar" method="POST">
-                        <div class="form-group">
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome" name="nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="assunto">Assunto:</label>
-                            <input type="text" id="assunto" name="assunto" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mensagem">Mensagem:</label>
-                            <textarea id="mensagem" name="mensagem" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary">Enviar Mensagem</button>
-                    </form>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body p-4">
+              <h3 class="card-title text-primary mb-4">
+                <i class="bi bi-info-circle me-2"></i>Informações de Contato
+              </h3>
+
+              <div class="mb-3">
+                <h5 class="mb-2">
+                  <i class="bi bi-geo-alt text-primary me-2"></i>Localização
+                </h5>
+                <p class="text-muted mb-0">Curitiba, Paraná - Brasil</p>
+                <small class="text-muted">Atendemos toda região metropolitana</small>
+              </div>
+
+              <div class="mb-3">
+                <h5 class="mb-2">
+                  <i class="bi bi-envelope text-primary me-2"></i>E-mail
+                </h5>
+                <p class="text-muted mb-0">contato@sportconnect.com.br</p>
+                <small class="text-muted">Respondemos em até 24 horas</small>
+              </div>
+
+              <div class="mb-3">
+                <h5 class="mb-2">
+                  <i class="bi bi-phone text-primary me-2"></i>Telefone/WhatsApp
+                </h5>
+                <p class="text-muted mb-0">(41) 99999-9999</p>
+                <small class="text-muted">Segunda a sexta, 8h às 18h</small>
+              </div>
+
+              <div class="mb-3">
+                <h5 class="mb-2">
+                  <i class="bi bi-share text-primary me-2"></i>Redes Sociais
+                </h5>
+                <div class="d-flex gap-3">
+                  <a href="#" class="text-primary fs-4">
+                    <i class="bi bi-facebook"></i>
+                  </a>
+                  <a href="#" class="text-primary fs-4">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                  <a href="#" class="text-primary fs-4">
+                    <i class="bi bi-twitter"></i>
+                  </a>
+                  <a href="#" class="text-primary fs-4">
+                    <i class="bi bi-whatsapp"></i>
+                  </a>
                 </div>
+              </div>
             </div>
-        </section>
-    </main>
-    <?php include_once __DIR__ . "/../partials/footer.php"; ?>
-</body>
-</html>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body p-4">
+              <h3 class="card-title text-primary mb-4">
+                <i class="bi bi-chat-dots me-2"></i>Envie uma Mensagem
+              </h3>
+
+              <form>
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nome Completo</label>
+                  <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">E-mail</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="subject" class="form-label">Assunto</label>
+                  <select class="form-select" id="subject" name="subject" required>
+                    <option value="">Selecione um assunto</option>
+                    <option value="duvida">Dúvida sobre a plataforma</option>
+                    <option value="problema">Problema técnico</option>
+                    <option value="sugestao">Sugestão de melhoria</option>
+                    <option value="parceria">Proposta de parceria</option>
+                    <option value="outro">Outro</option>
+                  </select>
+                </div>
+
+                <div class="mb-4">
+                  <label for="message" class="form-label">Mensagem</label>
+                  <textarea class="form-control" id="message" name="message" rows="4" placeholder="Descreva sua dúvida, sugestão ou problema..." required></textarea>
+                </div>
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-send me-2"></i>Enviar Mensagem
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-5">
+        <div class="card-body p-4">
+          <h3 class="card-title text-primary mb-4">
+            <i class="bi bi-question-circle me-2"></i>Perguntas Frequentes
+          </h3>
+
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  Como funciona o SportConnect?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  O SportConnect é uma plataforma onde você pode criar publicações procurando parceiros
+                  para atividades esportivas ou se candidatar para participar de grupos já formados.
+                  É como uma rede social focada em esportes!
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  É gratuito para usar?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Sim! O SportConnect é completamente gratuito. Você pode criar sua conta, publicar eventos
+                  e participar de grupos sem nenhum custo.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  Quais esportes posso encontrar?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Temos diversas categorias: futebol, vôlei, basquete, corrida, tênis, natação e muito mais.
+                  Se não encontrar seu esporte favorito, entre em contato conosco!
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                  Como posso garantir minha segurança?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Recomendamos sempre encontrar em locais públicos e conhecidos. Os dados de contato são
+                  compartilhados apenas entre participantes aceitos nos grupos. Sempre confie no seu instinto!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <?php if (!isset($_SESSION['user_id'])): ?>
+        <h4 class="mb-3">Ainda não faz parte da comunidade?</h4>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+          <a href="index.php?url=auth/registerForm" class="btn btn-primary btn-lg">
+            <i class="bi bi-person-plus me-2"></i>Criar Conta Grátis
+          </a>
+          <a href="index.php?url=auth/loginForm" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Fazer Login
+          </a>
+        </div>
+        <?php else: ?>
+        <h4 class="mb-3">Explore mais da plataforma!</h4>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+          <a href="index.php?url=post/list" class="btn btn-primary btn-lg">
+            <i class="bi bi-calendar-event me-2"></i>Ver Eventos
+          </a>
+          <a href="index.php?url=post/create" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-plus-circle me-2"></i>Criar Evento
+          </a>
+        </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php include __DIR__ . '/../partials/footer.php'; ?>

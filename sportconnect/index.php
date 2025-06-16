@@ -1,7 +1,9 @@
 <?php
+session_start();
 require_once 'controllers/HomeController.php';
 require_once 'controllers/ProfileController.php';
 require_once 'controllers/AuthController.php';
+require_once 'controllers/PostController.php';
 
 $url = isset($_GET['url']) ? $_GET['url'] : 'home/index';
 $url = rtrim($url, '/');

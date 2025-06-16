@@ -4,8 +4,6 @@ require_once __DIR__ . '/../models/User.php';
 
 class ProfileController {
     public function index () {
-        session_start();
-        
         if (!isset($_SESSION['user_id'])) {
             header('Location: index.php?url=auth/loginForm');
             exit();
@@ -43,8 +41,6 @@ class ProfileController {
     }
 
     public function edit(){
-        session_start();
-        
         if (!isset($_SESSION['user_id'])) {
             header('Location: index.php?url=auth/loginForm');
             exit();
