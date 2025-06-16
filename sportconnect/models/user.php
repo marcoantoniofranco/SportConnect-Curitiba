@@ -109,6 +109,21 @@ class User
         return $this->whatsapp;
     }
     
+    public function getTelefone()
+    {
+        return $this->telefone;
+    }
+    
+    public function getCpf()
+    {
+        return $this->cpf;
+    }
+    
+    public function getDataNascimento()
+    {
+        return $this->data_nascimento;
+    }
+    
     public function findByCpfAndBirthdate($cpf, $data_nascimento)
     {
         try {

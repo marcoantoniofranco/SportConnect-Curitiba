@@ -9,7 +9,6 @@ function isLoggedIn() {
 function setUserSession($userId) {
     $_SESSION['user_id'] = $userId;
     if (isset($_POST['remember_me'])) {
-        // Implementar cookies para "lembrar login"
         setcookie('remember_user', $userId, time() + (86400 * 30), '/');
     }
 }
