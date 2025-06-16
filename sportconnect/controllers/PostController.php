@@ -263,7 +263,7 @@ class PostController {
         $category->findById($post->getCategoryId());
 
         $conexao = $this->db->getConexao();
-        $sql = "SELECT p.*, u.nome FROM participacoes p JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_publicacao = :id";
+        $sql = "SELECT p.*, u.nome, u.email, u.telefone FROM participacoes p JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_publicacao = :id ORDER BY p.status ASC, u.nome ASC";
         $stmt = $conexao->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();

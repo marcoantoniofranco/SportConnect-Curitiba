@@ -95,10 +95,11 @@ require_once __DIR__ . "/../partials/header.php";
       <div class="mt-4">
         <h5>Solicitações de Participação</h5>
         <div class="table-responsive">
-          <table class="table">
-            <thead>
+          <table class="table table-striped">
+            <thead class="table-dark">
               <tr>
-                <th>Nome</th>
+                <th>Candidato</th>
+                <th>Contato</th>
                 <th>Status</th>
                 <th>Ações</th>
               </tr>
@@ -106,7 +107,36 @@ require_once __DIR__ . "/../partials/header.php";
             <tbody>
               <?php foreach ($participations as $participation): ?>
               <tr>
-                <td><?php echo htmlspecialchars($participation['nome']); ?></td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-circle bg-primary text-white me-3">
+                      <?php echo strtoupper(substr($participation['nome'], 0, 1)); ?>
+                    </div>
+                    <div>
+                      <h6 class="mb-0"><?php echo htmlspecialchars($participation['nome']); ?></h6>
+                      <small class="text-muted">
+                        <i class="bi bi-envelope me-1"></i>
+                        <?php echo htmlspecialchars($participation['email']); ?>
+                      </small>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <?php if (!empty($participation['telefone'])): ?>
+                  <div class="d-flex flex-column">
+                    <small class="text-muted mb-1">
+                      <i class="bi bi-telephone me-1"></i>
+                      <?php echo htmlspecialchars($participation['telefone']); ?>
+                    </small>
+                    <span class="btn btn-success btn-sm">
+                      <i class="bi bi-whatsapp me-1"></i>
+                      WhatsApp
+                    </span>
+                  </div>
+                  <?php else: ?>
+                  <span class="text-muted">Telefone não informado</span>
+                  <?php endif; ?>
+                </td>
                 <td>
                   <span class="badge bg-<?php 
                                                 echo $participation['status'] === 'pendente' ? 'warning' : 
@@ -117,20 +147,33 @@ require_once __DIR__ . "/../partials/header.php";
                 </td>
                 <td>
                   <?php if ($participation['status'] === 'pendente'): ?>
-                  <form action="index.php?url=participation/respond/<?php echo $participation['id']; ?>/aceito" method="POST" class="d-inline">
-                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
-                    <button type="submit" class="btn btn-success btn-sm">Aceitar</button>
-                  </form>
-                  <form action="index.php?url=participation/respond/<?php echo $participation['id']; ?>/recusado" method="POST" class="d-inline">
-                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
-                    <button type="submit" class="btn btn-danger btn-sm">Recusar</button>
-                  </form>
+                  <div class="btn-group" role="group">
+                    <form action="index.php?url=participation/respond/<?php echo $participation['id']; ?>/aceito" method="POST" class="d-inline">
+                      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
+                      <button type="submit" class="btn btn-success btn-sm" title="Aceitar candidatura">
+                        <i class="bi bi-check-circle me-1"></i>Aceitar
+                      </button>
+                    </form>
+                    <form action="index.php?url=participation/respond/<?php echo $participation['id']; ?>/recusado" method="POST" class="d-inline">
+                      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
+                      <button type="submit" class="btn btn-danger btn-sm" title="Recusar candidatura">
+                        <i class="bi bi-x-circle me-1"></i>Recusar
+                      </button>
+                    </form>
+                  </div>
+                  <?php else: ?>
+                  <small class="text-muted">Ação já realizada</small>
                   <?php endif; ?>
                 </td>
               </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
+        </div>
+
+        <div class="alert alert-info mt-3">
+          <i class="bi bi-info-circle me-2"></i>
+          <strong>Dica:</strong> Use os dados de contato (email e telefone) para conversar com o candidato antes de aceitar ou recusar a participação.
         </div>
       </div>
       <?php endif; ?>
