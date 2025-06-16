@@ -18,6 +18,7 @@ class Database
             return $this->pdo;
         } catch (PDOException $erro) {
             $this->msgErro = "Erro na conexão: " . $erro->getMessage();
+            error_log("Erro de conexão com o banco: " . $erro->getMessage());
             return false;
         }
     }
@@ -25,7 +26,11 @@ class Database
     public function getConexao()
     {
         if ($this->pdo == null) {
-            $this->conectar();
+            $conexao = $this->conectar();
+            if ($conexao === false) {
+                error_log("Falha ao conectar ao banco de dados: " . $this->msgErro);
+                throw new Exception("Falha ao conectar ao banco de dados: " . $this->msgErro);
+            }
         }
         return $this->pdo;
     }
