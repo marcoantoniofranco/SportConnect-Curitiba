@@ -14,10 +14,9 @@ class ProfileController {
         $user = new User();
         if ($user->findById($_SESSION['user_id'])) {
             $userData = new stdClass();
-            $userData->nome = $user->getNome();
-            $userData->email = $user->getEmail();
-            $userData->telefone = $user->getTelefone();
-            $userData->whatsapp = $user->getWhatsapp();
+                         $userData->nome = $user->getNome();
+             $userData->email = $user->getEmail();
+             $userData->telefone = $user->getTelefone();
             $userData->bio = ""; 
             $userData->profile_photo = null;
             $userData->esportes = "";

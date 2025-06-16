@@ -1,6 +1,6 @@
 <?php
 
-require_once '../config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 class User
 {
@@ -11,7 +11,6 @@ class User
     private $telefone;
     private $cpf;
     private $data_nascimento;
-    private $whatsapp;
     
     public function __construct()
     {
@@ -43,12 +42,11 @@ class User
             $stmt->execute();
             if ($stmt->rowCount() > 0) return false;
             
-            $sql = "INSERT INTO usuarios (nome, email, telefone, whatsapp, cpf, data_nascimento, senha) VALUES (:nome, :email, :telefone, :whatsapp, :cpf, :data_nascimento, :senha)";
+            $sql = "INSERT INTO usuarios (nome, email, telefone, cpf, data_nascimento, senha) VALUES (:nome, :email, :telefone, :cpf, :data_nascimento, :senha)";
             $stmt = $conexao->prepare($sql);
             $stmt->bindParam(':nome', $dados['nome']);
             $stmt->bindParam(':email', $dados['email']);
             $stmt->bindParam(':telefone', $dados['telefone']);
-            $stmt->bindParam(':whatsapp', $dados['whatsapp']);
             $stmt->bindParam(':cpf', $dados['cpf']);
             $stmt->bindParam(':data_nascimento', $dados['data_nascimento']);
             $stmt->bindParam(':senha', $dados['senha']);
@@ -75,7 +73,6 @@ class User
                 $this->telefone = $resultado['telefone'];
                 $this->cpf = $resultado['cpf'];
                 $this->data_nascimento = $resultado['data_nascimento'];
-                $this->whatsapp = $resultado['whatsapp'] ?? null;
                 return true;
             }
             return false;
@@ -106,7 +103,7 @@ class User
     
     public function getWhatsapp()
     {
-        return $this->whatsapp;
+        return $this->telefone;
     }
     
     public function getTelefone()

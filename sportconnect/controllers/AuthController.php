@@ -82,8 +82,7 @@ class AuthController {
             'senha' => $hashedPassword,
             'telefone' => $_POST['phone'] ?? '',
             'cpf' => $_POST['cpf'] ?? '',
-            'data_nascimento' => $_POST['birth_date'] ?? '',
-            'whatsapp' => $_POST['whatsapp'] ?? null
+            'data_nascimento' => $_POST['birth_date'] ?? ''
         ];
         $userModel = new User();
         if ($userModel->create($dadosNovoUsuario)) {
