@@ -42,6 +42,11 @@
               <i class="bi bi-plus-circle me-1"></i>Criar Evento
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.php?url=category/index">
+              <i class="bi bi-trophy me-1"></i>Categorias
+            </a>
+          </li>
           <?php endif; ?>
           <li class="nav-item">
             <a class="nav-link" href="index.php?url=home/about">

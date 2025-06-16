@@ -7,7 +7,9 @@ include __DIR__ . '/../partials/header.php';
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="text-center mb-5">
-        <i class="bi bi-envelope-fill text-primary" style="font-size: 4rem;"></i>
+        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+          <i class="bi bi-envelope-fill text-primary" style="font-size: 3.5rem;"></i>
+        </div>
         <h1 class="display-4 fw-bold mt-3">Entre em Contato</h1>
         <p class="lead text-muted">Estamos aqui para ajudar você a se conectar com outros atletas</p>
       </div>
@@ -49,18 +51,26 @@ include __DIR__ . '/../partials/header.php';
                   <h5 class="mb-2">
                     <i class="bi bi-share text-primary me-2"></i>Redes Sociais
                   </h5>
-                  <div class="d-flex gap-3">
-                    <a href="#" class="text-primary fs-4" title="Facebook">
-                      <i class="bi bi-facebook"></i>
+                  <div class="d-flex gap-2">
+                    <a href="https://facebook.com/sportconnectcuritiba" target="_blank" class="text-decoration-none" title="Facebook">
+                      <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-facebook text-primary"></i>
+                      </div>
                     </a>
-                    <a href="#" class="text-primary fs-4" title="Instagram">
-                      <i class="bi bi-instagram"></i>
+                    <a href="https://instagram.com/sportconnectcuritiba" target="_blank" class="text-decoration-none" title="Instagram">
+                      <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-instagram text-primary"></i>
+                      </div>
                     </a>
-                    <a href="#" class="text-primary fs-4" title="Twitter">
-                      <i class="bi bi-twitter"></i>
+                    <a href="https://twitter.com/sportconnectcwr" target="_blank" class="text-decoration-none" title="Twitter">
+                      <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-twitter-x text-primary"></i>
+                      </div>
                     </a>
-                    <a href="#" class="text-primary fs-4" title="WhatsApp">
-                      <i class="bi bi-whatsapp"></i>
+                    <a href="https://wa.me/5541999999999" target="_blank" class="text-decoration-none" title="WhatsApp">
+                      <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-whatsapp text-success"></i>
+                      </div>
                     </a>
                   </div>
                 </div>

@@ -9,7 +9,7 @@ include __DIR__ . '/../partials/header.php';
       <div class="card profile-card">
         <div class="card-body text-center p-4">
           <div class="mb-3">
-            <div class="profile-avatar bg-primary d-flex align-items-center justify-content-center">
+            <div class="profile-avatar bg-primary bg-gradient d-flex align-items-center justify-content-center rounded-circle mx-auto" style="width: 100px; height: 100px;">
               <i class="bi bi-person-fill text-white" style="font-size: 3rem;"></i>
             </div>
           </div>
@@ -61,7 +61,9 @@ include __DIR__ . '/../partials/header.php';
 
       <div class="card">
         <div class="card-body text-center py-5">
-          <i class="bi bi-calendar-event text-primary" style="font-size: 3rem;"></i>
+          <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+            <i class="bi bi-calendar-event text-primary" style="font-size: 2.5rem;"></i>
+          </div>
           <h5 class="mt-3">Explore Eventos Esportivos</h5>
           <p class="text-muted mb-4">Encontre eventos esportivos em Curitiba e conecte-se com outros atletas</p>
           <div class="d-flex gap-3 justify-content-center">

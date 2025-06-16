@@ -306,4 +306,88 @@ body {
 .btn-success:hover {
     background-color: #128c7e;
     border-color: #128c7e;
+}
+
+/* Melhorias para ícones */
+.icon-circle {
+    transition: all 0.3s ease;
+}
+
+.icon-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.sport-icon {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.sport-icon:hover {
+    transform: scale(1.15);
+    filter: brightness(1.1);
+}
+
+.bg-primary.bg-opacity-10 {
+    transition: all 0.3s ease;
+}
+
+.bg-primary.bg-opacity-10:hover {
+    background-color: rgba(37, 99, 235, 0.2) !important;
+    transform: scale(1.05);
+}
+
+.bg-success.bg-opacity-10:hover {
+    background-color: rgba(25, 135, 84, 0.2) !important;
+    transform: scale(1.05);
+}
+
+.bg-success.bg-opacity-20:hover {
+    background-color: rgba(25, 135, 84, 0.3) !important;
+    transform: scale(1.05);
+}
+
+.bg-primary.bg-opacity-20:hover {
+    background-color: rgba(37, 99, 235, 0.3) !important;
+    transform: scale(1.05);
+}
+
+/* Animações para redes sociais */
+.social-icon {
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Melhorias para cards de evento */
+.event-card .card-body {
+    position: relative;
+    overflow: hidden;
+}
+
+.event-card .card-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.event-card:hover .card-body::before {
+    left: 100%;
+}
+
+/* Melhorias para footer */
+.footer-link {
+    transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--primary-color) !important;
+    transform: translateX(5px);
 } 

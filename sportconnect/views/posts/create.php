@@ -8,7 +8,9 @@ require_once __DIR__ . '/../../includes/csrf.php';
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="text-center mb-5">
-        <i class="bi bi-plus-circle-fill text-primary" style="font-size: 4rem;"></i>
+        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+          <i class="bi bi-plus-circle-fill text-primary" style="font-size: 3rem;"></i>
+        </div>
         <h1 class="display-5 fw-bold mt-3">Criar Novo Evento</h1>
         <p class="lead text-muted">Organize um evento esportivo e encontre parceiros para jogar</p>
       </div>
@@ -118,7 +120,7 @@ require_once __DIR__ . '/../../includes/csrf.php';
             </div>
 
             <div class="d-flex gap-3 justify-content-end">
-              <a href="/posts" class="btn btn-outline-secondary btn-lg">
+              <a href="index.php?url=post/list" class="btn btn-outline-secondary btn-lg">
                 <i class="bi bi-arrow-left me-2"></i>Cancelar
               </a>
               <button type="submit" class="btn btn-primary btn-lg">

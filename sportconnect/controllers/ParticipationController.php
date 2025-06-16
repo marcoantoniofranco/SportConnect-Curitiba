@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Post.php';
 
@@ -19,7 +20,7 @@ class ParticipationController {
     }
 
     public function apply($post_id) {
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
             $_SESSION['error'] = 'Erro de segurança: Token inválido';
             header('Location: index.php?url=post/view/' . $post_id);
             exit();
@@ -51,38 +52,44 @@ class ParticipationController {
             exit();
         }
 
-        $sql = "INSERT INTO participacoes (id_publicacao, id_usuario, status) VALUES (:post_id, :user_id, 'pendente')";
+        $sql = "INSERT INTO participacoes (id_publicacao, id_usuario) VALUES (:post_id, :user_id)";
         $stmt = $conexao->prepare($sql);
         $stmt->bindParam(':post_id', $post_id);
         $stmt->bindParam(':user_id', $_SESSION['user_id']);
-
+        
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Candidatura enviada com sucesso!';
+            regenerarTokenCSRF();
         } else {
             $_SESSION['error'] = 'Erro ao enviar candidatura';
         }
-
+        
         header('Location: index.php?url=post/view/' . $post_id);
         exit();
     }
 
-    public function respond($participation_id, $status) {
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+    public function respond($participation_id) {
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
             $_SESSION['error'] = 'Erro de segurança: Token inválido';
-            header('Location: index.php?url=post/list');
+            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php?url=post/list'));
             exit();
         }
 
-        if (!in_array($status, ['aceito', 'recusado'])) {
-            $_SESSION['error'] = 'Status inválido';
-            header('Location: index.php?url=post/list');
+        $action = $_POST['action'] ?? '';
+        $post_id = $_POST['post_id'] ?? '';
+
+        if (!in_array($action, ['aceitar', 'rejeitar'])) {
+            $_SESSION['error'] = 'Ação inválida';
+            header('Location: index.php?url=post/view/' . $post_id);
             exit();
         }
 
         $conexao = $this->db->getConexao();
-        $sql = "SELECT * FROM participacoes WHERE id = :id";
+        $sql = "SELECT p.*, pub.id_usuario as author_id FROM participacoes p 
+                JOIN publicacoes pub ON p.id_publicacao = pub.id_publicacao 
+                WHERE p.id = :participation_id";
         $stmt = $conexao->prepare($sql);
-        $stmt->bindParam(':id', $participation_id);
+        $stmt->bindParam(':participation_id', $participation_id);
         $stmt->execute();
         $participation = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -99,24 +106,26 @@ class ParticipationController {
             exit();
         }
 
-        if ($post->getUserId() !== $_SESSION['user_id']) {
-            $_SESSION['error'] = 'Não autorizado';
-            header('Location: index.php?url=post/list');
+        if ($participation['author_id'] !== $_SESSION['user_id']) {
+            $_SESSION['error'] = 'Você não tem permissão para responder a esta candidatura';
+            header('Location: index.php?url=post/view/' . $participation['id_publicacao']);
             exit();
         }
 
-        $sql = "UPDATE participacoes SET status = :status WHERE id = :id";
+        $novo_status = $action === 'aceitar' ? 'aceito' : 'rejeitado';
+        $sql = "UPDATE participacoes SET status = :status WHERE id = :participation_id";
         $stmt = $conexao->prepare($sql);
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':id', $participation_id);
-        
+        $stmt->bindParam(':status', $novo_status);
+        $stmt->bindParam(':participation_id', $participation_id);
+
         if ($stmt->execute()) {
-            $_SESSION['success'] = 'Participação ' . $status . ' com sucesso!';
+            $_SESSION['success'] = $action === 'aceitar' ? 'Candidatura aceita!' : 'Candidatura rejeitada!';
+            regenerarTokenCSRF();
         } else {
-            $_SESSION['error'] = 'Erro ao atualizar participação';
+            $_SESSION['error'] = 'Erro ao processar resposta';
         }
 
-        header('Location: index.php?url=post/view/' . $post->getId());
+        header('Location: index.php?url=post/view/' . $participation['id_publicacao']);
         exit();
     }
 } 

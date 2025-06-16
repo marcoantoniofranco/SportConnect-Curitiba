@@ -1,24 +1,22 @@
 <?php
 
 require_once __DIR__ . '/../includes/session.php';
+require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../models/User.php';
 
 class AuthController {
 
     public function loginForm() {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        gerarTokenCSRF();
         require_once __DIR__ . '/../views/auth/login.php';
     }
 
     public function login() {
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
             $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
             header('Location: index.php?url=auth/loginForm');
             exit();
         }
-        unset($_SESSION['csrf_token']);
 
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
@@ -38,11 +36,11 @@ class AuthController {
 
             if ($remember_me) {
                 $token = bin2hex(random_bytes(32));
-                setcookie('remember_token', $token, time() + (86400 * 30), '/', '', true, true);
-                
+                setcookie('remember_token', $token, time() + (86400 * 30), '/', '', false, true);
                 $userModel->saveRememberToken($user['id_usuario'], $token);
             }
 
+            regenerarTokenCSRF();
             header('Location: index.php?url=home/index');
             exit();
         }
@@ -53,7 +51,7 @@ class AuthController {
     }
 
     public function checkRememberMe() {
-        if (isset($_COOKIE['remember_token'])) {
+        if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
             $token = $_COOKIE['remember_token'];
             $userModel = new User();
             $user = $userModel->findByRememberToken($token);
@@ -70,19 +68,16 @@ class AuthController {
     }
 
     public function registerForm() {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        gerarTokenCSRF();
         require_once __DIR__ . '/../views/auth/register.php';
     }
 
     public function register() {
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
             $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
             header('Location: index.php?url=auth/registerForm');
             exit();
         }
-        unset($_SESSION['csrf_token']);
 
         $name = $_POST['name'] ?? '';
         $email = $_POST['email'] ?? '';
@@ -113,6 +108,7 @@ class AuthController {
         $userModel = new User();
         if ($userModel->create($dadosNovoUsuario)) {
             $_SESSION['success_message'] = 'Cadastro realizado com sucesso! Faça o login.';
+            regenerarTokenCSRF();
             header('Location: index.php?url=auth/loginForm');
             exit();
         } else {
@@ -123,19 +119,16 @@ class AuthController {
     } 
 
     public function recoverPasswordForm() {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        gerarTokenCSRF();
         require_once __DIR__ . '/../views/auth/recover.php';
     }
 
     public function recoverPassword() {
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
             $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
             header('Location: index.php?url=auth/recoverPasswordForm');
             exit();
         }
-        unset($_SESSION['csrf_token']);
 
         $cpf = $_POST['cpf'] ?? '';
         $data_nascimento = $_POST['birth_date'] ?? '';
@@ -143,6 +136,7 @@ class AuthController {
         $user = $userModel->findByCpfAndBirthdate($cpf, $data_nascimento);
         if ($user) {
             $_SESSION['success_message'] = 'Dados validados! Entre em contato com o suporte para redefinir sua senha.';
+            regenerarTokenCSRF();
             header('Location: index.php?url=auth/loginForm');
             exit();
         } else {
@@ -153,19 +147,16 @@ class AuthController {
     }
 
     public function resetPasswordForm() {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        gerarTokenCSRF();
         require_once __DIR__ . '/../views/auth/Reset.php';
     }
 
     public function updatePassword() {
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        if (!validarTokenCSRF($_POST['csrf_token'] ?? '')) {
             $_SESSION['error_message'] = 'Erro de segurança. Tente novamente.';
             header('Location: index.php?url=auth/resetPasswordForm');
             exit();
         }
-        unset($_SESSION['csrf_token']);
 
         $new_password = $_POST['new_password'] ?? '';
         $confirm_password = $_POST['confirm_password'] ?? '';
@@ -199,6 +190,7 @@ class AuthController {
         
         if ($userModel->updatePassword($_SESSION['user_id'], $hashedPassword)) {
             $_SESSION['success_message'] = 'Senha alterada com sucesso!';
+            regenerarTokenCSRF();
             header('Location: index.php?url=profile/index');
             exit();
         } else {

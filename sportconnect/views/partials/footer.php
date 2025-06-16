@@ -13,17 +13,25 @@
               Encontre parceiros, participe de eventos e viva o esporte!
             </p>
             <div class="d-flex gap-3">
-              <a href="#" class="text-light">
-                <i class="bi bi-facebook fs-5"></i>
+              <a href="https://facebook.com/sportconnectcuritiba" target="_blank" class="text-light text-decoration-none social-icon" title="Facebook">
+                <div class="bg-primary bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                  <i class="bi bi-facebook"></i>
+                </div>
               </a>
-              <a href="#" class="text-light">
-                <i class="bi bi-instagram fs-5"></i>
+              <a href="https://instagram.com/sportconnectcuritiba" target="_blank" class="text-light text-decoration-none social-icon" title="Instagram">
+                <div class="bg-primary bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                  <i class="bi bi-instagram"></i>
+                </div>
               </a>
-              <a href="#" class="text-light">
-                <i class="bi bi-twitter fs-5"></i>
+              <a href="https://twitter.com/sportconnectcwr" target="_blank" class="text-light text-decoration-none social-icon" title="Twitter">
+                <div class="bg-primary bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                  <i class="bi bi-twitter-x"></i>
+                </div>
               </a>
-              <a href="#" class="text-light">
-                <i class="bi bi-whatsapp fs-5"></i>
+              <a href="https://wa.me/5541999999999" target="_blank" class="text-light text-decoration-none social-icon" title="WhatsApp">
+                <div class="bg-success bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                  <i class="bi bi-whatsapp"></i>
+                </div>
               </a>
             </div>
           </div>
@@ -32,22 +40,22 @@
             <h6 class="mb-3">Navegação</h6>
             <ul class="list-unstyled">
               <li class="mb-2">
-                <a href="index.php?url=home/index" class="text-muted text-decoration-none">
+                <a href="index.php?url=home/index" class="text-muted text-decoration-none footer-link">
                   <i class="bi bi-house me-1"></i>Início
                 </a>
               </li>
               <li class="mb-2">
-                <a href="index.php?url=post/list" class="text-muted text-decoration-none">
+                <a href="index.php?url=post/list" class="text-muted text-decoration-none footer-link">
                   <i class="bi bi-calendar-event me-1"></i>Eventos
                 </a>
               </li>
               <li class="mb-2">
-                <a href="index.php?url=home/about" class="text-muted text-decoration-none">
+                <a href="index.php?url=home/about" class="text-muted text-decoration-none footer-link">
                   <i class="bi bi-info-circle me-1"></i>Sobre
                 </a>
               </li>
               <li class="mb-2">
-                <a href="index.php?url=home/contact" class="text-muted text-decoration-none">
+                <a href="index.php?url=home/contact" class="text-muted text-decoration-none footer-link">
                   <i class="bi bi-envelope me-1"></i>Contato
                 </a>
               </li>
@@ -58,29 +66,29 @@
             <h6 class="mb-3">Esportes Populares</h6>
             <ul class="list-unstyled">
               <li class="mb-2">
-                <span class="text-muted">
-                  <i class="bi bi-circle-fill me-2" style="font-size: 0.5rem;"></i>Futebol
-                </span>
+                <a href="index.php?url=post/list" class="text-muted text-decoration-none">
+                  <i class="bi bi-dribbble me-2"></i>Futebol
+                </a>
               </li>
               <li class="mb-2">
-                <span class="text-muted">
-                  <i class="bi bi-circle-fill me-2" style="font-size: 0.5rem;"></i>Vôlei
-                </span>
+                <a href="index.php?url=post/list" class="text-muted text-decoration-none">
+                  <i class="bi bi-record-circle me-2"></i>Vôlei
+                </a>
               </li>
               <li class="mb-2">
-                <span class="text-muted">
-                  <i class="bi bi-circle-fill me-2" style="font-size: 0.5rem;"></i>Basquete
-                </span>
+                <a href="index.php?url=post/list" class="text-muted text-decoration-none">
+                  <i class="bi bi-trophy me-2"></i>Basquete
+                </a>
               </li>
               <li class="mb-2">
-                <span class="text-muted">
-                  <i class="bi bi-circle-fill me-2" style="font-size: 0.5rem;"></i>Corrida
-                </span>
+                <a href="index.php?url=post/list" class="text-muted text-decoration-none">
+                  <i class="bi bi-person-arms-up me-2"></i>Corrida
+                </a>
               </li>
               <li class="mb-2">
-                <span class="text-muted">
-                  <i class="bi bi-circle-fill me-2" style="font-size: 0.5rem;"></i>Tênis
-                </span>
+                <a href="index.php?url=post/list" class="text-muted text-decoration-none">
+                  <i class="bi bi-disc me-2"></i>Tênis
+                </a>
               </li>
             </ul>
           </div>
