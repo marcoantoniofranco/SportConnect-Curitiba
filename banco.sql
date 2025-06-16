@@ -52,3 +52,13 @@ CREATE TABLE lembrar_tokens (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
+    INSERT INTO categorias_esportivas (nome, descricao) VALUES 
+    ('Futebol', 'Jogos e treinos de futebol de campo e society'),
+    ('Basquete', 'Partidas e treinos de basquete'),
+    ('Vôlei', 'Jogos de vôlei de quadra e praia'),
+    ('Corrida', 'Grupos de corrida e caminhada'),
+    ('Tênis', 'Jogos e treinos de tênis'),
+    ('Natação', 'Grupos de natação e hidroginástica'),
+    ('Ciclismo', 'Pedais e grupos de ciclismo'),
+    ('Esporte Geral', 'Outros esportes não especificados');
+

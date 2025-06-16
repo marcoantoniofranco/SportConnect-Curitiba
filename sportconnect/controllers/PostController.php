@@ -109,7 +109,7 @@ class PostController {
                 header('Location: index.php?url=post/list');
                 exit();
             } else {
-                $_SESSION['error'] = 'Erro ao criar evento. Tente novamente.';
+                $_SESSION['error'] = 'Erro ao criar evento. Verifique se todos os campos estão preenchidos corretamente.';
                 $_SESSION['form_data'] = [
                     'title' => $title,
                     'description' => $description,
