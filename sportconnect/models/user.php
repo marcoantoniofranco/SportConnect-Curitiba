@@ -123,6 +123,20 @@ class User
             return false;
         }
     }
+    
+    public function updatePassword($id, $senha)
+    {
+        try {
+            $conexao = $this->db->getConexao();
+            $sql = "UPDATE usuarios SET senha = :senha WHERE id_usuario = :id";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':senha', $senha);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
 
 ?>
