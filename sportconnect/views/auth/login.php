@@ -27,6 +27,15 @@ include __DIR__ . '/../partials/header.php';
           }
           ?>
 
+          <div class="alert alert-info mb-4">
+            <h6 class="alert-heading mb-2">
+              <i class="bi bi-info-circle me-2"></i>Conta de Teste para Demonstração
+            </h6>
+            <p class="mb-1"><strong>E-mail:</strong> teste@gmail.com</p>
+            <p class="mb-0"><strong>Senha:</strong> 123456</p>
+            <small class="text-muted">Use estas credenciais para testar o sistema</small>
+          </div>
+
           <form method="POST" action="index.php?url=auth/login">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
 

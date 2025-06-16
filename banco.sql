@@ -62,3 +62,6 @@ CREATE TABLE lembrar_tokens (
     ('Ciclismo', 'Pedais e grupos de ciclismo'),
     ('Esporte Geral', 'Outros esportes não especificados');
 
+INSERT INTO usuarios (nome, email, telefone, cpf, data_nascimento, senha) VALUES 
+('Usuário Teste', 'teste@gmail.com', '(41) 99999-9999', '123.456.789-00', '1990-01-01', '$2y$10$1NvJ72BcWSK4UVf7UeXgJOdE26QKwNYkDxNIppMPRjIMDl3ojyoIK');
+
